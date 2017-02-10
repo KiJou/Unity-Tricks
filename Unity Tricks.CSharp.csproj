@@ -66,7 +66,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\NewBehaviourScript.cs" />
+    <Compile Include="Assets\NO2\PlayerMove.cs" />
+    <Compile Include="Assets\NO3\Typing.cs" />
+    <Compile Include="Assets\NO4\Shaking.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\NO2\Shader\PlayerShader.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
