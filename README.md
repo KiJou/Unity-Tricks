@@ -1,8 +1,3 @@
-# unity Tricks
-
-标签： unity
-
----
 # NO.1 Unity切图
 ### 前期准备
 > * 把图片`Texture Type`改为`Sprite`，`Sprite Mode`改为`Multiple`。
@@ -34,7 +29,7 @@
 
 ### 透视效果编写与测试
 > * Shader文件夹下有一个`PlayerShader`，控制玩家透视效果。
-> * Unity引擎会自动检测hader文件，然后自动添加到Shader下拉列表。
+> * Unity引擎会自动检测Shader文件，然后自动添加到Shader下拉列表。
 > * 选择玩家`Shader`->`Custom`->`PlayerShader`。
 > * 运行游戏，可以发现当玩家走到被物体挡住的地方时，会有黑色的阴影效果，成功。
 
@@ -42,6 +37,31 @@
 > * 场景中有`Text`，上面挂着`Typing`脚本。
 > * 运行Main场景，可以看到文字呈现打字效果。
 
-# NO.3 镜头震动效果
+# NO.4 镜头震动效果
 > * 场景中有`Camera`，上面挂着`Shaking`脚本。
 > * 运行Main场景，可以看到镜头抖动效果。
+
+# NO.5 玩家范围检测
+### 基础知识
+> * `Vector3.Distance(Vector3 a, Vector3 b)` 返回a和b之间的距离。
+> * `Vector3.normalized` 向量标准化。（只读）
+> * `Vector3.Dot(Vector3 lhs, Vector3 rhs)` 返回两个向量的点乘积。
+> * `Mathf.Rad2Deg` 弧度到度的转化常量。（只读）
+> * `Mathf.Acos(float f)` 以弧度为单位计算并返回参数 f 中指定的数字的反余弦值。
+> * `Debug.DrawLine(Vector3 start, Vector3 end, Color color)` 从start起点到end末点，绘制一条color颜色的线。
+
+### 基本思路
+> * 玩家范围检测就是判断怪物是否在玩家一定`距离`和`角度`（呈现扇形区域）内，因此需要分别计算距离和角度。
+> * 玩家和怪物的`距离`可以通过`Vector3.Distance`计算。
+> * 玩家和怪物的`角度`可以通过`Mathf.Acos`计算，然后乘以`Mathf.Rad2Deg`转化为度数。
+
+### 检测效果编写与测试
+> * 场景有玩家和怪物，玩家来自NO.2。
+> * 检测脚本名为`Detecting`，挂到玩家身上。
+> * 运行游戏，可以看到如果范围内，则输出在，如果范围外，则输出不在。
+
+# NO.6 镜头放大？旋转？
+### 尽请期待
+
+---
+注：部分代码和文字来自网络，经过本人整合到本工程，有任何不明白都可以与我交流~~~
