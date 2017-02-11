@@ -19,8 +19,8 @@ public class Shaking : MonoBehaviour
     void DelayShaking()
     {
         nextPos = Vector3.zero;  // x y z 方向初始化为 0
-        nextPos.x = cameraPos.x + Random.Range(-shakingRange, shakingRange);  // 随机取得 x 方向位置
-        nextPos.y = cameraPos.y + Random.Range(-shakingRange, shakingRange);  // 随机取得 y 方向位置
+        nextPos.x = cameraPos.x + Random.Range(-shakingPos, shakingPos);  // 随机取得 x 方向位置
+        nextPos.y = cameraPos.y + Random.Range(-shakingPos, shakingPos);  // 随机取得 y 方向位置
         nextPos.z = cameraPos.z;  // z 方向保持不变
         this.transform.position = nextPos;  // 注意这里不要写成 cameraPos = nextPos
     }

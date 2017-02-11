@@ -69,6 +69,7 @@
     <Compile Include="Assets\NO2\PlayerMove.cs" />
     <Compile Include="Assets\NO3\Typing.cs" />
     <Compile Include="Assets\NO4\Shaking.cs" />
+    <Compile Include="Assets\NO5\Detecting.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\NO2\Shader\PlayerShader.shader" />
