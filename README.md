@@ -56,12 +56,35 @@
 > * 玩家和怪物的`角度`可以通过`Mathf.Acos`计算，然后乘以`Mathf.Rad2Deg`转化为度数。
 
 ### 检测效果编写与测试
-> * 场景有玩家和怪物，玩家来自NO.2。
-> * 检测脚本名为`Detecting`，挂到玩家身上。
-> * 运行游戏，可以看到如果范围内，则输出在，如果范围外，则输出不在。
+> * 场景有玩家和怪物，玩家设置同NO.2。
+> * 范围检测脚本名为`Detecting`，挂到玩家身上。
+> * 运行游戏，Game视图下点击Gizmos显示画图效果，可以看到如果范围内，则输出在，如果范围外，则输出不在。
 
-# NO.6 镜头放大？旋转？
-### 尽请期待
+# NO.6 镜头放大旋转
+### 基础知识
+> * `Vector.magnitude` 返回向量的长度，向量的长度是(x*x+y*y+z*z)的平方根。
+> * `Mathf.Clamp(float value, float min, float max)` 限制value的值在min和max之间，如果value小于min，返回min。如果value大于max，返回max。否则返回value。
+> * `Transform.RotateAround(Vector3 point, Vector3 axis, float angle)` 一个物体围绕 point位置 的 axis轴 旋转 angle角度
+
+### 基本思路
+> * transform.position = offsetPosition + player.position;  // 镜头跟随玩家
+> * ScrollView();  // 控制镜头的拉近拉远
+`Input.GetAxis("Mouse ScrollWheel")` 鼠标向后滑动返回负数（拉近视野），向前滑动正数（拉远视野）
+> * RotateView();  // 控制镜头的左右上下 
+`Input.GetMouseButton(1)` 得到鼠标右键的按下
+`Input.GetAxis("Mouse X")` 得到鼠标水平方向的滑动
+`Input.GetAxis("Mouse Y")` 得到鼠标垂直方向的滑动
+
+### 镜头效果编写与测试
+> * 场景有两个玩家（默认Player2可用），Player1设置同NO.2是用键盘WSAD控制玩家移动，Player2我们新增了一个脚本`PlayerMove2`来用鼠标左键控制玩家移动。
+> * 控制镜头的脚本名为`FollowPlayer`，挂到镜头身上。
+> * 运行游戏，鼠标`左键`可以控制玩家移动，鼠标`滑轮`可以控制镜头拉近拉远，鼠标`右键`可以控制镜头上下左右。
+
+# NO.7 跑马灯
+### 尚未完善
+
+# NO.8 贪吃蛇算法与基本实现
+### TODO
 
 ---
 注：部分代码和文字来自网络，经过本人整合到本工程，有任何不明白都可以与我交流~~~
