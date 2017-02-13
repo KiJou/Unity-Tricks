@@ -83,11 +83,11 @@
 # NO.7 跑马灯
 ### 场景设置
 > * 新建一个Image作为背景。调整适当大小。
-> * 背景下再新建一个Image。添加Mask组件，用于遮住背景之外的文字，Rect Transfrom设置为Stretch，四维全部设置为0，铺满背景。
-如果是水平滚动的将Rect Transform的Pivot设置为`1 0.5`，令Mask锚点位于`右边`。
-如果是垂直滚动的将Rect Transform的Pivot设置为`0.5 0`，令Mask锚点位于`下边`。
-> * Mask下创建Text，随意写些文字，居中显示，添加Content Size Fitter。
-如果是水平滚动的将`Horizontal Fit`设置为Preferred Size，将Rect Transform的Pivot设置为`0 0.5`，令Text锚点位于Mask处，方便实现从右往左动画。
+> * 背景下再新建一个Image。添加Mask组件，用于遮住背景之外的文字，Rect Transfrom设置为Stretch，四维全部设置为0，铺满背景。  
+如果是水平滚动的将Rect Transform的Pivot设置为`1 0.5`，令Mask锚点位于`右边`。  
+如果是垂直滚动的将Rect Transform的Pivot设置为`0.5 0`，令Mask锚点位于`下边`。  
+> * Mask下创建Text，随意写些文字，居中显示，添加Content Size Fitter。  
+如果是水平滚动的将`Horizontal Fit`设置为Preferred Size，将Rect Transform的Pivot设置为`0 0.5`，令Text锚点位于Mask处，方便实现从右往左动画。  
 如果是垂直滚动的将`Vertical Fit`设置为Preferred Size，将Rect Transform的Pivot设置为`0.5 1`，令Text锚点位于Mask处，方便实现从下往上动画。
 
 ### 跑马灯原理
@@ -108,21 +108,21 @@ tweener.OnComplete(delegate { Debug.Log("水平走马灯事件结束"); });  // 
 
 # NO.8 贪吃蛇算法与基本实现
 ### 场景设置
-> * `Main Camera` 2D游戏的基本设置：
-1.`Clear Flags`设置为Solid Color
-2.`Background`设置合适颜色，例如白色
-3.`Projection`设置为Orthographic
-4.`Size`设置合适大小，例如10
-> * 创建`Quad`作为背景，背景长度宽度都应该是`奇数`：
+> * `Main Camera` 2D游戏的基本设置：  
+1.`Clear Flags`设置为Solid Color  
+2.`Background`设置合适颜色，例如白色  
+3.`Projection`设置为Orthographic  
+4.`Size`设置合适大小，例如10  
+> * 创建`Quad`作为背景，背景长度宽度都应该是`奇数`：  
 1.上部分 + `中间1格` + 下部分 = 宽度  
 2.左部分 + `中间1格` + 右部分 = 长度  
-3.由此可知，在`上下左右对称`的情况下，1和2结果都是奇数
+3.由此可知，在`上下左右对称`的情况下，1和2结果都是奇数  
 > * 创建`Cube`，`Snake Food Wall`分别为蛇头 食物 墙壁的标签，将蛇头制作成`Prefab`，改名为SnakeBody作为蛇身。
 > * 创建`Material`，`Red Blue Black`分别作为蛇 食物 墙壁的材质。注意Material Shader改成`Unlit/Color` 去掉阴影，成为2D图像。
-> * 蛇 食物 墙壁的设置
-1.将`Box Collider`组件选择`Is Trigger`，碰撞效果为触发器。
-2.将`Size`改成`0.5`， 否则擦边而过也会判断为碰撞。
-3.都加上`Rigidbody`组件，取消`Gravity`，允许碰撞的同时防止因重力掉落。
+> * 蛇 食物 墙壁的设置  
+1.将`Box Collider`组件选择`Is Trigger`，碰撞效果为触发器。  
+2.将`Size`改成`0.5`， 否则擦边而过也会判断为碰撞。  
+3.都加上`Rigidbody`组件，取消`Gravity`，允许碰撞的同时防止因重力掉落。  
 
 ### 随机生成食物算法
 ``` c#
