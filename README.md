@@ -83,11 +83,11 @@
 # NO.7 跑马灯
 ### 场景设置
 > * 新建一个Image作为背景。调整适当大小。
-> * 背景下再新建一个Image。添加Mask组件，用于遮住背景之外的文字，Rect Transfrom设置为Stretch，四维全部设置为0，铺满背景。  
-如果是水平滚动的将Rect Transform的Pivot设置为`1 0.5`，令Mask锚点位于`右边`。  
-如果是垂直滚动的将Rect Transform的Pivot设置为`0.5 0`，令Mask锚点位于`下边`。  
-> * Mask下创建Text，随意写些文字，居中显示，添加Content Size Fitter。  
-如果是水平滚动的将`Horizontal Fit`设置为Preferred Size，将Rect Transform的Pivot设置为`0 0.5`，令Text锚点位于Mask处，方便实现从右往左动画。  
+> * 背景下再新建一个Image。添加Mask组件，用于遮住背景之外的文字，Rect Transfrom设置为Stretch，四维全部设置为0，铺满背景。
+如果是水平滚动的将Rect Transform的Pivot设置为`1 0.5`，令Mask锚点位于`右边`。
+如果是垂直滚动的将Rect Transform的Pivot设置为`0.5 0`，令Mask锚点位于`下边`。
+> * Mask下创建Text，随意写些文字，居中显示，添加Content Size Fitter。
+如果是水平滚动的将`Horizontal Fit`设置为Preferred Size，将Rect Transform的Pivot设置为`0 0.5`，令Text锚点位于Mask处，方便实现从右往左动画。
 如果是垂直滚动的将`Vertical Fit`设置为Preferred Size，将Rect Transform的Pivot设置为`0.5 1`，令Text锚点位于Mask处，方便实现从下往上动画。
 
 ### 跑马灯原理
@@ -108,21 +108,21 @@ tweener.OnComplete(delegate { Debug.Log("水平走马灯事件结束"); });  // 
 
 # NO.8 贪吃蛇算法与基本实现
 ### 场景设置
-> * `Main Camera` 2D游戏的基本设置：  
-1.`Clear Flags`设置为Solid Color  
-2.`Background`设置合适颜色，例如白色  
-3.`Projection`设置为Orthographic  
-4.`Size`设置合适大小，例如10  
-> * 创建`Quad`作为背景，背景长度宽度都应该是`奇数`：  
+> * `Main Camera` 2D游戏的基本设置：
+1.`Clear Flags`设置为Solid Color
+2.`Background`设置合适颜色，例如白色
+3.`Projection`设置为Orthographic
+4.`Size`设置合适大小，例如10
+> * 创建`Quad`作为背景，背景长度宽度都应该是`奇数`：
 1.上部分 + `中间1格` + 下部分 = 宽度  
 2.左部分 + `中间1格` + 右部分 = 长度  
-3.由此可知，在`上下左右对称`的情况下，1和2结果都是奇数  
+3.由此可知，在`上下左右对称`的情况下，1和2结果都是奇数
 > * 创建`Cube`，`Snake Food Wall`分别为蛇头 食物 墙壁的标签，将蛇头制作成`Prefab`，改名为SnakeBody作为蛇身。
 > * 创建`Material`，`Red Blue Black`分别作为蛇 食物 墙壁的材质。注意Material Shader改成`Unlit/Color` 去掉阴影，成为2D图像。
-> * 蛇 食物 墙壁的设置  
-1.将`Box Collider`组件选择`Is Trigger`，碰撞效果为触发器。  
-2.将`Size`改成`0.5`， 否则擦边而过也会判断为碰撞。  
-3.都加上`Rigidbody`组件，取消`Gravity`，允许碰撞的同时防止因重力掉落。  
+> * 蛇 食物 墙壁的设置
+1.将`Box Collider`组件选择`Is Trigger`，碰撞效果为触发器。
+2.将`Size`改成`0.5`， 否则擦边而过也会判断为碰撞。
+3.都加上`Rigidbody`组件，取消`Gravity`，允许碰撞的同时防止因重力掉落。
 
 ### 随机生成食物算法
 ``` c#
@@ -156,6 +156,55 @@ void OnTriggerEnter(Collider other)  // Collider 碰撞检测
     }
 }
 ```
+
+# NO.9 摇杆实现
+> * `定义委托`  
+public delegate void JoyStickTouchBegin(Vector2 vec);  // 定义触摸开始事件委托  
+public delegate void JoyStickTouchMove(Vector2 vec);  // 定义触摸过程事件委托  
+public delegate void JoyStickTouchEnd();  // 定义触摸结束事件委托  
+> * `注册事件`  
+public event JoyStickTouchBegin OnJoyStickTouchBegin;  // 注册触摸开始事件  
+public event JoyStickTouchMove OnJoyStickTouchMove;  // 注册触摸过程事件  
+public event JoyStickTouchEnd OnJoyStickTouchEnd;  // 注册触摸结束事件  
+> * `使用接口`  
+IPointerDownHandler, IPointerUpHandler, IDragHandler  
+public void OnPointerDown(PointerEventData eventData)  // 触摸开始  
+public void OnPointerUp(PointerEventData eventData)  // 触摸结束  
+public void OnDrag(PointerEventData eventData)  // 触摸过程  
+> * `返回摇杆的偏移量`  
+``` c#
+private Vector2 GetJoyStickAxis(PointerEventData eventData)
+{
+    // 获取手指位置的世界坐标
+    Vector3 worldPosition;
+    if (RectTransformUtility.ScreenPointToWorldPointInRectangle(selfTransform,
+             eventData.position, eventData.pressEventCamera, out worldPosition))
+        selfTransform.position = worldPosition;
+    // 获取摇杆偏移量
+    Vector2 touchAxis = selfTransform.anchoredPosition - originPosition;
+    // 摇杆偏移量限制
+    if (touchAxis.magnitude >= JoyStickRadius)
+    {
+        touchAxis = touchAxis.normalized * JoyStickRadius;
+        selfTransform.anchoredPosition = touchAxis;
+    }
+    return touchAxis;
+}
+```
+
+# NO.10 小地图实现
+> * `UI准备`：Mask圆形遮罩，Minimap小地图边框。
+> * 添加一个新的相机，并命名为`Mini Camera`。然后将该相机设为 Player 的子对象，position设为(0, 10,0)，rotation设为(90, 0, 0)。
+> * 渲染到UI层需要用到Render Texture来实现。依次点击菜单项Assets -> Create -> Render Texture新建Render Texture，并命名为`Minimap Render`。选中Mini Camera后将Target Texture设为Minimap Render。
+> * 下面新建Canvas来添加UI元素。新建Raw Image，命名为`Map`，将Texture设为Minimap Render。
+> * 下面新建Image，命名为`Mask`，为其添加Mask组件，并将Image的Source Image设为上面的圆形遮罩。最后将Map设为Mask的子对象。
+> * 下面新建Image，命名为`Outline`，将Image的Source Image设为上面的小地图边框。
+> * 为了让整个小地图移动起来更方便，新建一个空的GameObject命名为`Minimap`，并将所有对象设为Minimap子对象。
+> * 最后层级如下：
+`Minimap`
+---- `Mask`
+-------- `Map`
+---- `Outline`
 
 ---
 注：部分代码和文字来自网络，经过本人整合到本工程，有任何不明白都可以与我交流~~~

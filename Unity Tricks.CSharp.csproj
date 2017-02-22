@@ -81,6 +81,8 @@
     <Compile Include="Assets\NO7\VRunning.cs" />
     <Compile Include="Assets\NO8\FoodSpawn.cs" />
     <Compile Include="Assets\NO8\SnakeMove.cs" />
+    <Compile Include="Assets\NO9\JoyStick.cs" />
+    <Compile Include="Assets\NO9\PlayerMove3.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\NO2\Shader\PlayerShader.shader" />
