@@ -200,11 +200,11 @@ private Vector2 GetJoyStickAxis(PointerEventData eventData)
 > * 下面新建Image，命名为`Mask`，为其添加Mask组件，并将Image的Source Image设为上面的圆形遮罩。最后将Map设为Mask的子对象。
 > * 下面新建Image，命名为`Outline`，将Image的Source Image设为上面的小地图边框。
 > * 为了让整个小地图移动起来更方便，新建一个空的GameObject命名为`Minimap`，并将所有对象设为Minimap子对象。
-> * 最后层级如下：
-`Minimap`
----- `Mask`
--------- `Map`
----- `Outline`
+> * 最后层级如下：  
+`Minimap`  
+---- `Mask`  
+-------- `Map`  
+---- `Outline`  
 
 ---
 注：部分代码和文字来自网络，经过本人整合到本工程，有任何不明白都可以与我交流~~~
