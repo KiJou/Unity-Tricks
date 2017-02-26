@@ -206,5 +206,77 @@ private Vector2 GetJoyStickAxis(PointerEventData eventData)
 -------- `Map`  
 ---- `Outline`  
 
----
-注：部分代码和文字来自网络，经过本人整合到本工程，有任何不明白都可以与我交流~~~
+# NO.11 时间倒流效果
+> * 一个简单的思路就是用Stack来记录物体的Position和Rotation，当需要时间回退的时候就Pop出来，赋值到物体上。不过为了可以进行拓展，比如只能回退到某段时间内的，而不是一下子回退到最开始的地方，我们需要剔除太久之前的信息。因此选择使用List而不是Stack。
+```
+// 限制实现
+if (ShouldLimit && HistoryPos.Count > Limit)  // 是否限制列表长度
+{
+    HistoryPos.RemoveAt(0);
+    HistoryRot.RemoveAt(0);
+}
+```
+```
+// 倒流实现
+if (HistoryPos.Count > 0)
+{
+    int index = HistoryPos.Count - 1;
+    this.transform.position = HistoryPos[index];
+    HistoryPos.RemoveAt(index);
+}
+if (HistoryRot.Count > 0)
+{
+    int index = HistoryRot.Count - 1;
+    this.transform.rotation = HistoryRot[index];
+    HistoryRot.RemoveAt(index);
+}
+```
+
+# NO.12 爆炸效果
+> * 场景中有四个方块Cube作为受到爆炸影响的物体，给它们添加刚体组件。新建一个球体Sphere，作为炸弹。当炸弹落下时碰撞到地面，炸弹爆炸。
+```
+// 如果碰撞物是地面，进行爆炸处理
+if (col.transform.tag == groundTag)
+{
+    // 定义爆炸位置为炸弹位置
+    Vector3 explosionPos = transform.position;
+    // 这个方法用来返回球型半径之内的所有碰撞体collider
+    Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
+    // 遍历返回的碰撞体，如果是刚体，则给刚体添加力
+    foreach (Collider hit in colliders)
+    {
+        if (hit.GetComponent<Rigidbody>())
+        {
+            hit.GetComponent<Rigidbody>().AddExplosionForce(force, explosionPos, radius, ups);
+        }
+        // 销毁地面和炸弹
+        Destroy(col.gameObject);
+        Destroy(gameObject);
+    }
+}
+```
+
+# No.13 射线拾取效果
+> * 场景中有四个方块Cube，当我们鼠标点击物品时，物品会消失。
+```
+// 检测鼠标左键的按下
+if (Input.GetMouseButtonDown(0))
+{
+    // 创建一条射线，产生的射线是在世界空间中，从相机的近裁剪面开始并穿过屏幕 position(x,y) 像素坐标
+    Ray ray = GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+    // RaycastHit 是一个结构体对象，用来储存射线返回的信息
+    RaycastHit hit;
+    // 如果射线碰撞到对象，把返回信息储存到 hit 中
+    if (Physics.Raycast(ray, out hit))
+    {
+        // 销毁碰撞到的物品
+        if (hit.transform.CompareTag(cubeTag))
+        {
+             Destroy(hit.transform.gameObject);
+        }
+    }
+}
+```
+
+
+# NO.14 聊天框效果
