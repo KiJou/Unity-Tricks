@@ -278,5 +278,156 @@ if (Input.GetMouseButtonDown(0))
 }
 ```
 
-
 # NO.14 聊天框效果
+> * 重点难点：  
+1. 需要控制别人和自己聊天框Item的位置
+2. 需要控制聊天框ScrollView的滚动
+3. 需要控制聊天框Item的宽度高度
+3. 需要控制聊天框ScrollView的伸长
+4. 需要移除历史聊天框Item
+> * 基本UI组件有玩家输入框、发送按钮、聊天框Item、聊天框ScrollView。
+> * 聊天框Item有left和right两种，分别是别人和自己，以自己的聊天框right为例子:  
+1. 新建一个Image作为`背景`，设置Anchor为(right, top)、Pivot为(1, 1)。  
+2. 在背景下新建一个Image作为`头像`，设置Anchor为(right, bottom)和一个Text作为`文字`。  
+3. 在头像下新建一个Text作为`名字`，设置Anchor为(right, middle)。  
+4. 挂上ChatUI脚本，专门控制UI显示。
+5. 将其制作成为Prefab，聊天框left同理。  
+> * 聊天框ScrollView：  
+新建一个ScrollView，设置Anchor为(stretch, stretch)，调整为适当大小。  
+```
+// 重要参数
+private float minWidth = 100.0f;  // 聊天框最小宽度
+private float maxWidth = 400.0f;  // 聊天框最大宽度
+private float iconHeight = 100.0f;  // 头像高度
+private float chatHeight = 10.0f;  // 聊天框间隔
+private float allHeight = 0.0f;  // 聊天框总高度
+private float marginWidth = 40.0f;  // 宽度边距
+private float marginHeight = 40.0f;  // 高度边距
+private int historyCnt = 10;  // 历史条数
+private List<GameObject> itemList = new List<GameObject>();  // 历史聊天框列表
+```
+```
+// 控制适应聊天框
+void FitScreen(GameObject tempGo)
+{
+    Text tempChatText = tempGo.transform.Find("Content").GetComponent<Text>();
+    if (tempChatText.preferredWidth + marginWidth < minWidth)  // 单行宽度太短，宽度至少为 minWidth
+    {
+        tempGo.GetComponent<RectTransform>().sizeDelta = new Vector2(minWidth, tempChatText.preferredHeight + marginHeight);
+        tempChatText.GetComponent<RectTransform>().sizeDelta = new Vector2(minWidth, tempChatText.preferredHeight + marginHeight);
+    }
+    else if (tempChatText.preferredWidth + marginWidth > maxWidth)  // 单行宽度太长，宽度至多为 maxWidth
+    {
+        tempGo.GetComponent<RectTransform>().sizeDelta = new Vector2(maxWidth, tempChatText.preferredHeight + marginHeight);
+        tempChatText.GetComponent<RectTransform>().sizeDelta = new Vector2(maxWidth - marginWidth, tempChatText.preferredHeight + marginHeight);
+    }
+    else  // 不长不短，文字自适应聊天框
+    {
+        tempGo.GetComponent<RectTransform>().sizeDelta = new Vector2(tempChatText.preferredWidth + marginWidth, tempChatText.preferredHeight + marginHeight);
+        tempChatText.GetComponent<RectTransform>().sizeDelta = new Vector2(tempChatText.preferredWidth, tempChatText.preferredHeight + marginHeight);
+    }
+    tempChatText.SetVerticesDirty();  // 通知 Layout 布局需要重建
+    tempGo.GetComponent<RectTransform>().anchoredPosition = new Vector3(0f, -allHeight);  // 相对于中心点设置位置
+    allHeight += (tempChatText.preferredHeight + marginHeight) + iconHeight + chatHeight;  // 增加高度，包括文字背景、头像高度和聊天框间隔
+    if (allHeight > itemParent.GetComponent<RectTransform>().sizeDelta.y)  // 超出父容器，父容器伸长
+    {
+        itemParent.GetComponent<RectTransform>().sizeDelta = new Vector2(itemParent.GetComponent<RectTransform>().sizeDelta.x, allHeight);
+    }
+}
+```
+```
+// 移除历史聊天框
+void Clear()
+{
+    if (itemList.Count > historyCnt)
+    {
+        Destroy(itemList[0]);
+        itemList.RemoveAt(0);
+        allHeight = 0.0f;
+        itemParent.GetComponent<RectTransform>().sizeDelta = new Vector2(0.0f, 0.0f);
+        foreach (var item in itemList)
+        {
+            FitScreen(item.gameObject);  // 重新排布 UI
+        }
+    }
+    isAddMessage = true;
+    scrollbarVertical.value = 0.1f;  // 利用 scrollbar 调整排版
+}
+```
+
+# NO.15 转盘抽奖
+> * 灯泡闪烁，不停地切换两张图片。
+```
+// 视觉上产生动态效果
+InvokeRepeating("SwitchRound", 0.0f, switchRoundTime);
+```
+> * 获奖物品，根据角度计算决定奖品。
+```
+// 360 为旋转一圈度数，22.5f 为初始偏移度数，取余 360 防止下标越界
+float angle = (360 - pointTransform.eulerAngles.z + 22.5f) % 360;
+// 每个奖品区域 45 度
+int index = (int)angle / 45;
+/ 根据角度计算决定奖品
+nameText.text = switchNames[index];
+```
+> * 指针顺时针旋转，指针旋转速度缓慢
+```
+// 指针顺时针旋转
+pointTransform.Rotate(Vector3.back * rotateSpeed * Time.deltaTime);
+// 指针旋转速度缓慢
+rotateSpeed -= deltaSpeed;
+```
+
+# NO.16 卡牌轮换
+> * 定义偏移量
+```
+private Vector3 Center = Vector3.zero;
+private float offsetX = 0.6f;
+private float offsetY = 0.1f;
+private float offsetZ = 0.1f;
+```
+> * 保证卡牌数量为奇数，中间为标志位，两边刚好对称
+```
+// 初始化精灵数组
+int childCount = transform.childCount;
+// 计算两侧精灵数目
+halfSize = (childCount - 1) / 2;
+// 初始化精灵
+sprites = new GameObject[childCount];
+for (int i = 0; i < childCount; i++)
+{
+    sprites[i] = transform.GetChild(i).gameObject;
+    SetPosition(i);
+     // SetDeepin(i);
+}
+index = halfSize + 1;
+// 计算精灵坐标
+void SetPosition(int index)
+{
+    float x;
+    float y;
+    float z;
+    if (index < halfSize)
+    {
+        x = -(halfSize - index) * offsetX + Center.x;
+        y = (halfSize - index) * offsetY + Center.y;
+        z = (halfSize - index) * offsetZ + Center.z;
+    }
+    else if (index > halfSize)
+    {
+        x = (index - halfSize) * offsetX + Center.x;
+        y = (index - halfSize) * offsetY + Center.y;
+        z = (index - halfSize) * offsetZ + Center.z;
+    }
+    else 
+    {
+        x = Center.x;
+        y = Center.y;
+        z = Center.z;
+    }
+    sprites[index].GetComponent<Transform>().position = new Vector3(x, y, z);
+}
+```
+
+---
+注：部分代码和文字来自网络，经过本人整合到本工程，有任何不明白都可以与我交流~~~

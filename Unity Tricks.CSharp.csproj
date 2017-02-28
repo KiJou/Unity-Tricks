@@ -81,6 +81,10 @@
     <Compile Include="Assets\NO11\TimeTravel.cs" />
     <Compile Include="Assets\NO12\Explosion.cs" />
     <Compile Include="Assets\NO13\PickUp.cs" />
+    <Compile Include="Assets\NO14\ChatRoom.cs" />
+    <Compile Include="Assets\NO14\ChatUI.cs" />
+    <Compile Include="Assets\NO15\LuckyRound.cs" />
+    <Compile Include="Assets\NO16\Switcher.cs" />
     <Compile Include="Assets\NO2\PlayerMove.cs" />
     <Compile Include="Assets\NO3\Typing.cs" />
     <Compile Include="Assets\NO4\Shaking.cs" />
