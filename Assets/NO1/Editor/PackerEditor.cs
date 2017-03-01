@@ -2,10 +2,10 @@
 using UnityEditor;
 using System.IO;
 
-public static class SpriteSheetPacker
+public static class PackerEditor
 {
-    [MenuItem("Assets/Sprite Sheet Packer/Pack")]
-    static void ProcessToSprite()
+    [MenuItem("Assets/Packer")]
+    static void Packer()
     {
         Texture2D image = Selection.activeObject as Texture2D;  // 获取旋转的对象
         string rootPath = Path.GetDirectoryName(AssetDatabase.GetAssetPath(image));  // 获取路径名称

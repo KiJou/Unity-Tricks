@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity Tricks.CSharp.Plugins", "Unity Tricks.CSharp.Plugins.csproj", "{037B056B-EAD3-CAE4-7BBD-C0E964809E22}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity Tricks.CSharp", "Unity Tricks.CSharp.csproj", "{122A223B-2FAD-FF1C-9DEA-1C14C09D4E05}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity Tricks.CSharp.Editor", "Unity Tricks.CSharp.Editor.csproj", "{04521019-AAEB-F3C1-CD8E-EF114BB59996}"
@@ -11,6 +13,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{037B056B-EAD3-CAE4-7BBD-C0E964809E22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{037B056B-EAD3-CAE4-7BBD-C0E964809E22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{037B056B-EAD3-CAE4-7BBD-C0E964809E22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{037B056B-EAD3-CAE4-7BBD-C0E964809E22}.Release|Any CPU.Build.0 = Release|Any CPU
 		{122A223B-2FAD-FF1C-9DEA-1C14C09D4E05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{122A223B-2FAD-FF1C-9DEA-1C14C09D4E05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{122A223B-2FAD-FF1C-9DEA-1C14C09D4E05}.Release|Any CPU.ActiveCfg = Release|Any CPU

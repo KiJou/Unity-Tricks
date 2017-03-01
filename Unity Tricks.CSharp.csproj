@@ -74,8 +74,14 @@
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
     <Reference Include="DOTween">
-      <HintPath>Assets\NO7\Demigiant\DOTween\DOTween.dll</HintPath>
+      <HintPath>Assets\Plugins\Demigiant\DOTween\DOTween.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Unity Tricks.CSharp.Plugins.csproj">
+      <Project>{037B056B-EAD3-CAE4-7BBD-C0E964809E22}</Project>
+      <Name>Unity Tricks.CSharp.Plugins</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\NO11\TimeTravel.cs" />
@@ -85,14 +91,16 @@
     <Compile Include="Assets\NO14\ChatUI.cs" />
     <Compile Include="Assets\NO15\LuckyRound.cs" />
     <Compile Include="Assets\NO16\Switcher.cs" />
+    <Compile Include="Assets\NO17\GridItem.cs" />
+    <Compile Include="Assets\NO17\Paging.cs" />
+    <Compile Include="Assets\NO18\TestAssetBundle.cs" />
+    <Compile Include="Assets\NO19\SoundRecording.cs" />
     <Compile Include="Assets\NO2\PlayerMove.cs" />
     <Compile Include="Assets\NO3\Typing.cs" />
     <Compile Include="Assets\NO4\Shaking.cs" />
     <Compile Include="Assets\NO5\Detecting.cs" />
     <Compile Include="Assets\NO6\FollowPlayer.cs" />
     <Compile Include="Assets\NO6\PlayerMove2.cs" />
-    <Compile Include="Assets\NO7\Demigiant\DOTween\Examples\Basics.cs" />
-    <Compile Include="Assets\NO7\Demigiant\DOTween\Examples\Sequences.cs" />
     <Compile Include="Assets\NO7\HRunning.cs" />
     <Compile Include="Assets\NO7\VRunning.cs" />
     <Compile Include="Assets\NO8\FoodSpawn.cs" />
@@ -101,10 +109,11 @@
     <Compile Include="Assets\NO9\PlayerMove3.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\NO18\Swordman\Swordman_Animation.txt" />
     <None Include="Assets\NO2\Shader\PlayerShader.shader" />
-    <None Include="Assets\NO7\Demigiant\DOTween\DOTween.XML" />
-    <None Include="Assets\NO7\Demigiant\DOTween\Editor\DOTweenEditor.XML" />
-    <None Include="Assets\NO7\Demigiant\DOTween\readme.txt" />
+    <None Include="Assets\Plugins\Demigiant\DOTween\DOTween.XML" />
+    <None Include="Assets\Plugins\Demigiant\DOTween\Editor\DOTweenEditor.XML" />
+    <None Include="Assets\Plugins\Demigiant\DOTween\readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
