@@ -4,11 +4,10 @@
 > * 打开`Sprite Editor`，左上角选择`Slice`，可以自动切图，或者手动调整，然后`Apply`，会自动生成一张张图片，但此时图片的信息只是存在meta中，需要导出图片。
 
 ### 切图效果编写与测试
-> * 脚本路径在Editor下的SpriteSheetPacker，属于UnityEditor类的，意味着不是在运行时工作，而是在编辑时工作。
-> * Unity引擎会自动检测到Editor文件下的UnityEditor类，可以看到导航栏的Assets下多了个Sprite Sheet Packer。
+> * 脚本路径在Editor下的`PackerEditor`，属于UnityEditor类的，意味着不是在运行时工作，而是在编辑时工作。
+> * Unity引擎会自动检测到Editor文件下的UnityEditor类，可以看到导航栏的Assets下多了个`Packer`。
 > * 把图片`Texture Type`改为`Advanced`，将`Read/Write Enabled`属性进行打勾。
-> * 选中切图后的图片，然后在菜单栏依次选择`Assets`->`Sprite Sheet Packer`->`Process to Sprites`
-，此时生成的图片放在同一路径上的同名文件夹。
+> * 选中切图后的图片，然后在菜单栏选择`Assets->Packer`，此时生成的图片放在同一路径上的同名文件夹。
 
 # NO.2 Unity透视Shader
 ### 透视原理
@@ -108,21 +107,21 @@ tweener.OnComplete(delegate { Debug.Log("水平走马灯事件结束"); });  // 
 
 # NO.8 贪吃蛇算法与基本实现
 ### 场景设置
-> * `Main Camera` 2D游戏的基本设置：
-1.`Clear Flags`设置为Solid Color
-2.`Background`设置合适颜色，例如白色
-3.`Projection`设置为Orthographic
-4.`Size`设置合适大小，例如10
-> * 创建`Quad`作为背景，背景长度宽度都应该是`奇数`：
+> * `Main Camera` 2D游戏的基本设置：  
+1.`Clear Flags`设置为Solid Color  
+2.`Background`设置合适颜色，例如白色  
+3.`Projection`设置为Orthographic  
+4.`Size`设置合适大小，例如10  
+> * 创建`Quad`作为背景，背景长度宽度都应该是`奇数`：  
 1.上部分 + `中间1格` + 下部分 = 宽度  
 2.左部分 + `中间1格` + 右部分 = 长度  
 3.由此可知，在`上下左右对称`的情况下，1和2结果都是奇数
 > * 创建`Cube`，`Snake Food Wall`分别为蛇头 食物 墙壁的标签，将蛇头制作成`Prefab`，改名为SnakeBody作为蛇身。
 > * 创建`Material`，`Red Blue Black`分别作为蛇 食物 墙壁的材质。注意Material Shader改成`Unlit/Color` 去掉阴影，成为2D图像。
-> * 蛇 食物 墙壁的设置
-1.将`Box Collider`组件选择`Is Trigger`，碰撞效果为触发器。
-2.将`Size`改成`0.5`， 否则擦边而过也会判断为碰撞。
-3.都加上`Rigidbody`组件，取消`Gravity`，允许碰撞的同时防止因重力掉落。
+> * 蛇 食物 墙壁的设置  
+1.将`Box Collider`组件选择`Is Trigger`，碰撞效果为触发器。  
+2.将`Size`改成`0.5`， 否则擦边而过也会判断为碰撞。  
+3.都加上`Rigidbody`组件，取消`Gravity`，允许碰撞的同时防止因重力掉落。  
 
 ### 随机生成食物算法
 ``` c#
@@ -280,18 +279,18 @@ if (Input.GetMouseButtonDown(0))
 
 # NO.14 聊天框效果
 > * 重点难点：  
-1. 需要控制别人和自己聊天框Item的位置
-2. 需要控制聊天框ScrollView的滚动
-3. 需要控制聊天框Item的宽度高度
-3. 需要控制聊天框ScrollView的伸长
-4. 需要移除历史聊天框Item
+1.需要控制别人和自己聊天框Item的位置
+2.需要控制聊天框ScrollView的滚动
+3.需要控制聊天框Item的宽度高度
+4.需要控制聊天框ScrollView的伸长
+5.需要移除历史聊天框Item
 > * 基本UI组件有玩家输入框、发送按钮、聊天框Item、聊天框ScrollView。
 > * 聊天框Item有left和right两种，分别是别人和自己，以自己的聊天框right为例子:  
-1. 新建一个Image作为`背景`，设置Anchor为(right, top)、Pivot为(1, 1)。  
-2. 在背景下新建一个Image作为`头像`，设置Anchor为(right, bottom)和一个Text作为`文字`。  
-3. 在头像下新建一个Text作为`名字`，设置Anchor为(right, middle)。  
-4. 挂上ChatUI脚本，专门控制UI显示。
-5. 将其制作成为Prefab，聊天框left同理。  
+1.新建一个Image作为`背景`，设置Anchor为(right, top)、Pivot为(1, 1)。  
+2.在背景下新建一个Image作为`头像`，设置Anchor为(right, bottom)和一个Text作为`文字`。  
+3.在头像下新建一个Text作为`名字`，设置Anchor为(right, middle)。  
+4.挂上ChatUI脚本，专门控制UI显示。
+5.将其制作成为Prefab，聊天框left同理。  
 > * 聊天框ScrollView：  
 新建一个ScrollView，设置Anchor为(stretch, stretch)，调整为适当大小。  
 ```
@@ -428,6 +427,154 @@ void SetPosition(int index)
     sprites[index].GetComponent<Transform>().position = new Vector3(x, y, z);
 }
 ```
+
+# NO.17 分页效果
+## 前期准备
+> * 制作Grid  
+1.新建Image，改名`Grid`作为头像。  
+2.新建Image作为`Grid`子物体，改名为`Item`作为物品名字背景。  
+3.新建Text作为`Item`子物体，改名为`Name`作为物品名字。  
+4.将物体制作成Prefab，最后层次关系应该是：
+Grid  
+----Item  
+--------Name  
+> * 自动排版  
+1.新建Panel，将Grid作为Panel子物体，再将Grid复制12份。  
+2.在Panel下添加`Grid Layout Group`组件，调整Padding、Cell Size、Spacing到合适位置，可以看到子物体全部自动排版。  
+
+## 分页实现
+> * 重要属性
+```
+private int itemsCount = 0;  // 物品数量
+private int pagesCount = 0;  // 页面数量
+private int pageIndex = 1;  // 当前页面
+private const int COUNT = 12;  // 一页物品数量
+private Vector3 from = new Vector3(1f, 1f, 1f);  // 动态变大
+private Vector3 to = new Vector3(0.8f, 0.8f, 0.8f);  // 动态变小
+private List<GridItem> itemList = new List<GridItem>();  // 物品列表
+```
+> * 初始化列表
+```
+// 利用12生肖数组来随机生成列表
+int cnt = Random.Range(1, 100);
+for (int i = 0; i < cnt; ++i)
+{
+    itemList.Add(items[Random.Range(0, items.Length)]);
+    Debug.Log(itemList[i].itemName);
+}
+// 计算元素总个数
+itemsCount = itemList.Count;
+// 计算总页数
+pagesCount = (itemsCount % COUNT) == 0 ? itemsCount / COUNT : (itemsCount / COUNT) + 1;
+BindPage(pageIndex);
+// 更新界面页数
+panelText.text = string.Format("{0} / {1}", pageIndex.ToString(), pagesCount.ToString());
+```
+> * 分页处理
+```
+// 需要特别处理的是最后1页
+if (index == pagesCount)
+{
+    // 最后一页剩下的元素数目为 itemsCount - COUNT * (index - 1)
+    // 其中 COUNT * (index-1) 为前面元素数目
+    int cnt = itemsCount - COUNT * (index - 1);
+    for (int i = 0; i < cnt; ++i)
+    {
+        BindGridItem(transform.GetChild(i), itemList[COUNT * (index - 1) + i]);
+        transform.GetChild(i).gameObject.SetActive(true);
+    }
+    for (int i = cnt; i < COUNT; ++i)
+    {
+        // 隐藏多余物品
+        transform.GetChild(i).gameObject.SetActive(false);
+        }
+    }
+    // 其他情况正常显示
+    else
+    {
+        for (int i = 0; i < COUNT; ++i)
+        {
+            BindGridItem(transform.GetChild(i), itemList[COUNT * (index - 1) + i]);
+            transform.GetChild(i).gameObject.SetActive(true);
+        }
+    }
+}
+```
+
+# NO.18 AssetBundle使用
+## 前期准备
+> * 导入角色文件夹，将角色制作成Prefab。
+> * 点击Prefab，可以看到Inspector视图下方的AssetBundle。
+> * 在Prefab的AssetBundle下添加一个名叫`swordman`的标识。
+
+## 导出AssetBundle
+> * 在同目录下新建目录`Editor`，进入目录新建脚本`BundleEditor`：
+```
+using UnityEditor;
+using UnityEngine;
+public static class BundleEditor
+{
+    private static string resPath = Application.dataPath + "/NO18/AssetBundles/";
+    [MenuItem("Assets/Build AssetBundles")]
+    static void BuildAssetBundles()
+    {
+        BuildPipeline.BuildAssetBundles(resPath, BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows);
+    }
+}
+```
+> * 这里需要保证目录`AssetBundles`存在，否则导致报错。
+> * 在菜单栏选择`Assets->Build AssetBundles`，AssetBundle将自动生成到对应目录。
+
+## 测试AssetBundle
+> * 从本地加载的文件目录：`"file://F:/HelloWorld/Unity/Unity Tricks/Assets/NO18/AssetBundles/"`。注意这里的地址就是我们生成的对应目录。
+> * 从网络加载的文件目录：`"http://www.littleredhat1997.com/code/AssetBundles/"`。注意需要将生成的AssetBundle放到服务器对应目录。
+> * 需要加载的资源名字：`"swordman"`
+```
+// 从本地 / 网络加载
+IEnumerator LoadAssetBundles(string url)
+{
+    WWW www = new WWW(url);
+    yield return www;
+    if (www.error != null)
+    {
+        Debug.LogError("网络错误");
+    }
+    else
+    {
+        AssetBundle bundle = www.assetBundle;
+        // 加载资源
+        Object obj = bundle.LoadAsset(prefabName);
+        go = Instantiate(obj) as GameObject;
+        // 释放加载的资源
+        bundle.Unload(false);
+    }
+}
+```
+
+# NO.19 录音功能
+> * `开始录音`
+Microphone.Start(string deviceName, bool loop, int lengthSec, int frequency)
+> * `停止录音`
+Microphone.End(string deviceName)
+> * `播放录音`
+audioSource.PlayOneShot(clip)
+> * `保存录音`
+Wav文件分好几个种类，相应的非数据信息存储在文件头部分，以下是其中一种WAV文件头格式。  
+8KHz采样、16比特量化的线性PCM语音信号的WAVE文件头格式表（`共44字节`）  
+偏移地址 字节数 数据类型 内容 文件头定义为  
+00H 4 char "RIFF" char riff_id[4]="RIFF"  
+04H 4 long int 文件总长-8 long int size0=文总长-8  
+08H 8 char "WAVEfmt " char wave_fmt[8]  
+10H 4 long int 10 00 00 00H(PCM) long int size1=0x10  
+14H 2 int 01 00H int fmttag=0x01  
+16H 2 int int channel=1 或2  
+18H 4 long int 采样率 long int samplespersec  
+1CH 4 long int 每秒播放字节数 long int bytepersec  
+20H 2 int 采样一次占字节数 int blockalign=声道数*量化数/8  
+22H 2 int 量化数 int bitpersamples=8或16  
+24H 4 char "data" char data_id="data"  
+28H 4 long int 采样数据字节数 long int size2=文长-44  
+2CH 到文尾 char 采样数据  
 
 ---
 注：部分代码和文字来自网络，经过本人整合到本工程，有任何不明白都可以与我交流~~~

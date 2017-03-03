@@ -34,6 +34,7 @@ public class SoundRecording : MonoBehaviour
             audioLength = 30.0f;
         }
 
+        // deviceName
         Microphone.End(null);
 
         if (audioLength < 1.0f)
@@ -102,9 +103,12 @@ public class SoundRecording : MonoBehaviour
 
         short[] intData = new short[samples.Length];
 
+        // bytesData array is twice the size of
+        // dataSource array because a float converted in Int16 is 2 bytes.
         byte[] bytesData = new byte[samples.Length * 2];
 
-        int rescaleFactor = 32767;  // to convert float to Int16  
+        // to convert float to Int16
+        int rescaleFactor = 32767;
 
         for (int i = 0; i < samples.Length; i++)
         {
@@ -120,7 +124,8 @@ public class SoundRecording : MonoBehaviour
         FileStream fileStream = new FileStream(filepath, FileMode.Create);
         byte emptyByte = new byte();
 
-        for (int i = 0; i < 44; i++)  // preparing the header  
+        // preparing the header
+        for (int i = 0; i < 44; i++)
         {
             fileStream.WriteByte(emptyByte);
         }
@@ -161,7 +166,8 @@ public class SoundRecording : MonoBehaviour
         byte[] sampleRate = BitConverter.GetBytes(hz);
         stream.Write(sampleRate, 0, 4);
 
-        byte[] byteRate = BitConverter.GetBytes(hz * channels * 2);  // sampleRate * bytesPerSample * number of channels, here 44100*2*2  
+        // sampleRate * bytesPerSample * number of channels, here 44100 * 2 * 2  
+        byte[] byteRate = BitConverter.GetBytes(hz * channels * 2);
         stream.Write(byteRate, 0, 4);
 
         ushort blockAlign = (ushort)(channels * 2);
