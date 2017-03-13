@@ -6,7 +6,7 @@ public class TestAssetBundle : MonoBehaviour
     // 本地资源地址
     private const string localPath = "file://F:/HelloWorld/Unity/Unity Tricks/Assets/NO18/AssetBundles/";
     // 网络资源地址
-    private const string netPath = "http://www.littleredhat1997.com/code/AssetBundles/";
+    private const string netPath = "http://www.littleredhat1997.com/games/AssetBundles/";
     // 需要加载的资源名字
     private const string prefabName = "swordman";
 

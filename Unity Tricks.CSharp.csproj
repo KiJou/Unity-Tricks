@@ -110,7 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\NO18\Swordman\Swordman_Animation.txt" />
-    <None Include="Assets\NO2\Shader\PlayerShader.shader" />
+    <None Include="Assets\NO2\PlayerShader.shader" />
     <None Include="Assets\Plugins\Demigiant\DOTween\DOTween.XML" />
     <None Include="Assets\Plugins\Demigiant\DOTween\Editor\DOTweenEditor.XML" />
     <None Include="Assets\Plugins\Demigiant\DOTween\readme.txt" />

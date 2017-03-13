@@ -334,25 +334,6 @@ void FitScreen(GameObject tempGo)
     }
 }
 ```
-```
-// 移除历史聊天框
-void Clear()
-{
-    if (itemList.Count > historyCnt)
-    {
-        Destroy(itemList[0]);
-        itemList.RemoveAt(0);
-        allHeight = 0.0f;
-        itemParent.GetComponent<RectTransform>().sizeDelta = new Vector2(0.0f, 0.0f);
-        foreach (var item in itemList)
-        {
-            FitScreen(item.gameObject);  // 重新排布 UI
-        }
-    }
-    isAddMessage = true;
-    scrollbarVertical.value = 0.1f;  // 利用 scrollbar 调整排版
-}
-```
 
 # NO.15 转盘抽奖
 > * 灯泡闪烁，不停地切换两张图片。
@@ -527,7 +508,7 @@ public static class BundleEditor
 
 ## 测试AssetBundle
 > * 从本地加载的文件目录：`"file://F:/HelloWorld/Unity/Unity Tricks/Assets/NO18/AssetBundles/"`。注意这里的地址就是我们生成的对应目录。
-> * 从网络加载的文件目录：`"http://www.littleredhat1997.com/code/AssetBundles/"`。注意需要将生成的AssetBundle放到服务器对应目录。
+> * 从网络加载的文件目录：`"http://www.littleredhat1997.com/games/AssetBundles/"`。注意需要将生成的AssetBundle放到服务器对应目录。
 > * 需要加载的资源名字：`"swordman"`
 ```
 // 从本地 / 网络加载
@@ -577,4 +558,6 @@ Wav文件分好几个种类，相应的非数据信息存储在文件头部分�
 2CH 到文尾 char 采样数据  
 
 ---
-注：部分代码和文字来自网络，经过本人整合到本工程，有任何不明白都可以与我交流~~~
+注：  
+视图有宽屏1280*720和长屏720*1280两种，如果视图错误，请自行调整视图！！！  
+部分代码和文字来自网络，经过本人整合到本工程，有任何不明白都可以与我交流！！！  

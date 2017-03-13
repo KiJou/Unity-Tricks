@@ -106,6 +106,9 @@
     <Reference Include="UnityEditor.Graphs">
       <HintPath>Library\UnityAssemblies\UnityEditor.Graphs.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.Android.Extensions">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Android.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
       <HintPath>Library\UnityAssemblies\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
     </Reference>
@@ -135,7 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\NO18\Swordman\Swordman_Animation.txt" />
-    <None Include="Assets\NO2\Shader\PlayerShader.shader" />
+    <None Include="Assets\NO2\PlayerShader.shader" />
     <None Include="Assets\Plugins\Demigiant\DOTween\DOTween.XML" />
     <None Include="Assets\Plugins\Demigiant\DOTween\Editor\DOTweenEditor.XML" />
     <None Include="Assets\Plugins\Demigiant\DOTween\readme.txt" />
