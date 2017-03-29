@@ -95,7 +95,7 @@
 > * 跑马灯的动画实现使用了`DOTween插件`。
 
 ### 跑马灯脚本解释
-``` c#
+```
 float width = HText.preferredWidth;  // 获取文字的长度
 HText.rectTransform.anchoredPosition = new Vector2(0, 0.5f);  // 让文字从在最右边开始移动
 Tweener tweener = HText.rectTransform.DOLocalMoveX(-(bgWidth + width), duration);  // 设置动画持续时间
@@ -136,7 +136,7 @@ public void OnPointerDown(PointerEventData eventData)  // 触摸开始
 public void OnPointerUp(PointerEventData eventData)  // 触摸结束  
 public void OnDrag(PointerEventData eventData)  // 触摸过程  
 > * `返回摇杆的偏移量`  
-``` c#
+```
 private Vector2 GetJoyStickAxis(PointerEventData eventData)
 {
     // 获取手指位置的世界坐标
