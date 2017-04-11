@@ -522,7 +522,156 @@ Wav文件分好几个种类，相应的非数据信息存储在文件头部分�
 28H 4 long int 采样数据字节数 long int size2=文长-44  
 2CH 到文尾 char 采样数据  
 
+# NO.20 2D攻击效果
+> * Inspector面板特殊行为，使用`[Header("***")]`定义变量，可以将***内容显示在Inspector面板上。
+> * 为了实现攻击特效，使用DOTween中的`DOPunchAnchorPos`实现玩家来回攻击以及`DOFade`实现血条淡入淡出。
+> * 玩家攻击方向playDir分为左Vector2.Left和右Vector2.Right，需要在Inspector面板手动设置，其中玩家一(X 1, Y 0)，玩家二(X -1, Y 0)。
+> * 玩家属性  
+[Header("冲击力量")]  
+public const int punch = 100;  
+[Header("血量上限")]  
+public const int allHp = 100;  
+[Header("当前血量")]  
+public int nowHp = 100;
+```
+// Back and Forth ==> punch duration
+transform.GetComponent<RectTransform>().DOPunchAnchorPos(playDir * punch, 0.2f);
+// Fade In ==> endValue duration
+damageText.DOFade(1.0f, 0f);
+// Fade Out ==> endValue duration
+damageText.DOFade(0f, 1.5f);
+```
+
+# NO.21 日夜交替
+> * 每小时移动角度 = 1 / 24 * 360度 = 15度
+> * 初始偏移角度 = 6 * 15度 = 90度
+> * 6:00 ==> Ligth X轴 0度
+> * 12:00 ==> Ligth X轴 90度
+> * 18:00 ==> Ligth X轴 180度
+```
+// 计算当前时间
+now = (now + Time.deltaTime) % day;
+// 计算光照角度
+float degree = now * perDegree - offsetDegree;
+// 改变Light角度
+transform.rotation = Quaternion.Euler(degree, 0, 0);
+```
+
+# NO.22 场景读条加载
+> * 导入资源，将Texture Type更改为`Sprite Mode`，另外可以根据需要在`Sprite Editor`进行九宫切图。
+> * 如果切换场景出现光照异常，莫慌，点击Window下的`Lighting`，取消Auto，点击Build，此时Unity自动将烘焙场景并生成场景同名文件夹，下次切换场景就不会光照异常。
+> * 为了防止场景加载过快，我们可以通过设置`allowSceneActivation`控制加载完毕后是否加入下一个场景。
+> * 在协程中异步加载场景，progress的取值范围在0.1 - 1之间，但是`不会等于1`。即progress可能在0.9的时候就会直接进入新场景，所以需要分别控制两种进度`0.1 - 0.9`和`0.9 - 1`。
+```
+op.allowSceneActivation = false;  // 控制异步加载的场景暂时不进入
+op.allowSceneActivation = true;  // 激活场景
+```
+```
+while (op.progress < 0.9f)
+{
+    toProgress = startProgress + (int)(op.progress * 100);
+    while (displayProgress < toProgress)
+    {
+        ++displayProgress;
+        SetProgress(displayProgress);
+        yield return null;
+    }
+    yield return null;
+}
+```
+```
+toProgress = 100;
+while (displayProgress < toProgress)
+{
+    ++displayProgress;
+    SetProgress(displayProgress);
+    yield return null;
+}
+```
+
+# NO.23 单摆效果
+> * 创建一个`Sphere`球体作为重物，Scale修改为(0.2, 0.2, 0.2)，加上Rigidbody组件。
+> * 创建一个`Capsule`胶囊体作为绳子，Position修改为(0, 1, 0)，Scale修改为(0.005, 1, 0.005)，加上Rigidbody组件，勾选Freeze PositionXYZ和Freeze RotationXY。
+> * 最关键的一步到了，向绳子加上`Fixed Joint`固定关节组件，并将Sphere拖到Connected Body上。固定关节基于另一个物体来限制一个物体的运动。
+> * 接下来需要控制绳子的质心以及重物的初始受力，分别在Rope和Sphere两个脚本实现
+```
+/*
+    设置质心为绳子中心
+    相对于变换的位置和旋转
+*/
+GetComponent<Rigidbody>().centerOfMass = centerOfMass;
+```
+```
+/*
+    添加一个力到刚体
+    Impulse为冲力
+*/
+GetComponent<Rigidbody>().AddForce(Vector3.right * force, ForceMode.Impulse);
+```
+
+# NO.24 插值移动效果
+## 前期准备
+> * 创建2D精灵Sprite，命名为`Player`，作为我们的主角。
+> * 通过前面的教程切图，制作人物休息和运动动画，按住CTRL选中几张帧动画图片拖到Inspector上的主角，可以快速生成动画，命名为`PlayerIdle`和`PlayerRun`，同时生成主角同名动画状态机Player。
+> * 双击Player动画状态机可以直接打开Animator视图，将PlayerIdle和PlayerRun拖到视图，分别右键`Make Transition`。
+> * 在Animator视图的左侧可以选择Parameters，创建Bool型参数`Run`，作为我们的转换条件。
+> * 通过上面的步骤，我们设置PlayerIdle到PlayerRun的转换条件为Run `True`，PlayerRun到PlayerIdle的转化条件为Run `False`。
+> * 这里有个细节需要注意，将两个转换上的`Has Exit Time`选项取消勾选，否则动画切换的时候会不及时，因为转换到下一个动画之前必须等待当前动画播放完毕。
+
+## 基础知识
+> * 线性插值 `Vector3.Lerp(Vector3 from, Vector3 to, float smoothing)` 。
+> * 公式 `t = from + (to - from) * smoothing`。
+> * from为初始位置，to为结束位置，smoothing为平滑速度，返回t为线性插值计算出来的向量，范围在 [0...1]之间。
+
+## 脚本解释
+> * 控制人物朝向
+```
+// 向左移动
+if (h < 0)
+{
+    // 人物Y轴翻转
+    transform.eulerAngles = new Vector3(0, 180.0f, 0);
+}
+// 向右移动
+else if (h > 0)
+{
+    // 人物Y轴翻转 
+    transform.eulerAngles = Vector3.zero;
+}
+```
+> * 控制人物线性插值移动和播放动画
+```
+if (Mathf.Abs(h) >= minDistance || Mathf.Abs(v) >= minDistance)
+{
+    // 获取移动方向
+    Vector3 tarDir = new Vector3(h, v, 0);
+    // 控制玩家移动
+    // transform.Translate(tarDir * speed * Time.deltaTime);
+    transform.position = Vector3.Lerp(transform.position,
+        transform.position + tarDir * speed, smoothing * Time.deltaTime);
+    if (!isRun)
+    {
+        isRun = true;
+        // 控制玩家运动动画
+        anim.SetBool("Run", true);
+    }
+}
+else
+{
+    isRun = false;
+    // 播放玩家休息动画
+    anim.SetBool("Run", false);
+}
+```
+
+# NO.25 弹力球效果
+> * 创建一个Cube作为平面和一个Sphere作为小球，调整Position和Scale。
+> * 添加Rigidbody组件到小球上，确保重力存在。
+> * 创建一个Physic Material，命名为Bounce，将其Bounciness属性设置为1。
+> * 将Bounce材质赋给Cube和Sphere，运行游戏即可看到弹力球效果。
+> * 最后我发现了一个问题，小球到最后越弹越高，按理说应该是能量守恒的呀......
+
 ---
 注：  
 视图有宽屏1280*720和长屏720*1280两种，如果视图错误，请自行调整视图！！！  
-部分代码和文字来自网络，经过本人整合到本工程，有任何不明白都可以与我交流！！！
+部分代码和文字来自网络，经过本人整合到本工程，有任何不明白都可以与我交流！！！  
