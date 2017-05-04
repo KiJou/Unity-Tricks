@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlayerMove3 : MonoBehaviour
+public class JSMove : MonoBehaviour
 {
     public float speed = 2.0f;
     private JoyStick js;

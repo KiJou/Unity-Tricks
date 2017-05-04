@@ -105,11 +105,11 @@
     <Compile Include="Assets\NO14\ChatRoom.cs" />
     <Compile Include="Assets\NO14\ChatUI.cs" />
     <Compile Include="Assets\NO15\LuckyRound.cs" />
-    <Compile Include="Assets\NO16\Switcher.cs" />
+    <Compile Include="Assets\NO16\CardSwitch.cs" />
     <Compile Include="Assets\NO17\GridItem.cs" />
-    <Compile Include="Assets\NO17\Paging.cs" />
+    <Compile Include="Assets\NO17\Page.cs" />
     <Compile Include="Assets\NO18\TestAssetBundle.cs" />
-    <Compile Include="Assets\NO19\SoundRecording.cs" />
+    <Compile Include="Assets\NO19\RecordSound.cs" />
     <Compile Include="Assets\NO2\PlayerMove.cs" />
     <Compile Include="Assets\NO20\GameController.cs" />
     <Compile Include="Assets\NO20\PlayerAttack.cs" />
@@ -119,16 +119,18 @@
     <Compile Include="Assets\NO23\Rope.cs" />
     <Compile Include="Assets\NO23\Sphere.cs" />
     <Compile Include="Assets\NO24\LerpRun.cs" />
+    <Compile Include="Assets\NO26\CaptureScreen.cs" />
+    <Compile Include="Assets\NO27\TakePhoto.cs" />
     <Compile Include="Assets\NO3\Typing.cs" />
     <Compile Include="Assets\NO4\Shaking.cs" />
     <Compile Include="Assets\NO5\Detecting.cs" />
+    <Compile Include="Assets\NO6\ClickMove.cs" />
     <Compile Include="Assets\NO6\FollowPlayer.cs" />
-    <Compile Include="Assets\NO6\PlayerMove2.cs" />
     <Compile Include="Assets\NO7\HRunning.cs" />
     <Compile Include="Assets\NO7\VRunning.cs" />
     <Compile Include="Assets\NO8\FadeText.cs" />
+    <Compile Include="Assets\NO9\JSMove.cs" />
     <Compile Include="Assets\NO9\JoyStick.cs" />
-    <Compile Include="Assets\NO9\PlayerMove3.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\NO18\Swordman\Swordman_Animation.txt" />

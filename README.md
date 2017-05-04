@@ -1,3 +1,5 @@
+# Unity Tricks小把戏
+
 # NO.1 Unity切图
 ### 前期准备
 > * 把图片`Texture Type`改为`Sprite`，`Sprite Mode`改为`Multiple`。
@@ -61,7 +63,7 @@
 
 # NO.6 镜头放大旋转
 ### 基础知识
-> * `Vector.magnitude` 返回向量的长度，向量的长度是(x*x+y*y+z*z)的平方根。
+> * `Vector.magnitude` 返回向量的长度，向量的长度是(x\*x+y\*y+z\*z)的平方根。
 > * `Mathf.Clamp(float value, float min, float max)` 限制value的值在min和max之间，如果value小于min，返回min。如果value大于max，返回max。否则返回value。
 > * `Transform.RotateAround(Vector3 point, Vector3 axis, float angle)` 一个物体围绕 point位置 的 axis轴 旋转 angle角度
 
@@ -244,11 +246,11 @@ if (Input.GetMouseButtonDown(0))
 
 # NO.14 聊天框效果
 > * 重点难点：  
-1.需要控制别人和自己聊天框Item的位置
-2.需要控制聊天框ScrollView的滚动
-3.需要控制聊天框Item的宽度高度
-4.需要控制聊天框ScrollView的伸长
-5.需要移除历史聊天框Item
+1.需要控制别人和自己聊天框Item的位置  
+2.需要控制聊天框ScrollView的滚动  
+3.需要控制聊天框Item的宽度高度  
+4.需要控制聊天框ScrollView的伸长  
+5.需要移除历史聊天框Item  
 > * 基本UI组件有玩家输入框、发送按钮、聊天框Item、聊天框ScrollView。
 > * 聊天框Item有left和right两种，分别是别人和自己，以自己的聊天框right为例子:  
 1.新建一个Image作为`背景`，设置Anchor为(right, top)、Pivot为(1, 1)。  
@@ -300,7 +302,7 @@ void FitScreen(GameObject tempGo)
 }
 ```
 
-# NO.15 转盘抽奖
+# NO.15 幸运转盘
 > * 灯泡闪烁，不停地切换两张图片。
 ```
 // 视觉上产生动态效果
@@ -671,7 +673,36 @@ else
 > * 将Bounce材质赋给Cube和Sphere，运行游戏即可看到弹力球效果。
 > * 最后我发现了一个问题，小球到最后越弹越高，按理说应该是能量守恒的呀......
 
+# NO.26 截屏功能
+```
+void Application.CaptureScreenshot(string fileName, int superSize);  
+参数filename为截屏文件名称，superSize为放大系数，默认为0，即不放大。  
+方法用于截取当前游戏画面并将截取的图片保存为PNG格式。截屏后文件会默认保存在根目录下，如果根目录下已存在同名文件，将会被替换。当superSize大于1时，截屏文件的宽度和高度将同时被放大superSize倍。
+```
+
+# NO.27 拍照功能
+```
+// 请求用户授权
+AnyncOperation Application.RequestUserAuthorization(UserAuthorization.WebCam)
+// 用户是否具有授权
+bool Application.HasUserAuthorization(UserAuthorization.WebCam)
+// 创建网络相机贴图
+WebCamTexture(string deviceName, string requestedWidth, string requestedHeight, int requestedFPS)
+// 播放
+void WebCamTexture.Play()
+// 创建二维纹理
+Texture2D(int width, int height, TextureFormat format, bool mipmap);
+// 读取屏幕像素信息并存储为纹理数据
+void WebCamTexture.ReadPixels(Rect source, int destX, int destY, bool recalculateMipmaps)
+// 应用
+void WebCamTexture.Apply()
+// 纹理编码为PNG格式
+byte[] WebCamTexture.EncodeToPNG()
+// 暂停
+void WebCamTexture.Pause()
+```
+
 ---
 注：  
-视图有宽屏1280*720和长屏720*1280两种，如果视图错误，请自行调整视图！！！  
+视图有宽屏1280\*720和长屏720\*1280两种，如果视图错误，请自行调整视图！！！  
 部分代码和文字来自网络，经过本人整合到本工程，有任何不明白都可以与我交流！！！  

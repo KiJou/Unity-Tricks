@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using DG.Tweening;
 
-public class Paging : MonoBehaviour
+public class Page : MonoBehaviour
 {
     public Text panelText;  // 界面页数
     public Button preBtn;  // 上一页

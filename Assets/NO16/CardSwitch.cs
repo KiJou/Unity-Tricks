@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Switcher : MonoBehaviour
+public class CardSwitch : MonoBehaviour
 {
     private Vector3 Center = Vector3.zero;
     private float offsetX = 0.6f;

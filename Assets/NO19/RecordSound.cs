@@ -2,7 +2,7 @@
 using System.IO;
 using UnityEngine;
 
-public class SoundRecording : MonoBehaviour
+public class RecordSound : MonoBehaviour
 {
     private int frequency = 44100;
     private AudioClip clip;
