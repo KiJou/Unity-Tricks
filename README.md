@@ -1,18 +1,18 @@
 # Unity Tricks小把戏
 
-# NO.1 Unity切图
+# NO.1 Sprite切图
 ### 前期准备
 > * 把图片`Texture Type`改为`Sprite`，`Sprite Mode`改为`Multiple`。
 > * 打开`Sprite Editor`，左上角选择`Slice`，可以自动切图，或者手动调整，然后`Apply`，会自动生成一张张图片，但此时图片的信息只是存在meta中，需要导出图片。
 
-### 切图效果编写与测试
+### 测试
 > * 脚本路径在Editor下的`PackerEditor`，属于UnityEditor类的，意味着不是在运行时工作，而是在编辑时工作。
 > * Unity引擎会自动检测到Editor文件下的UnityEditor类，可以看到导航栏的Assets下多了个`Packer`。
 > * 把图片`Texture Type`改为`Advanced`，将`Read/Write Enabled`属性进行打勾。
 > * 选中切图后的图片，然后在菜单栏选择`Assets->Packer`，此时生成的图片放在同一路径上的同名文件夹。
 
-# NO.2 Unity透视Shader
-### 透视原理
+# NO.2 Shader透视
+### 原理
 > * 将玩家绘制多遍：`第一遍透视绘制`，当玩家被物体挡住，则绘制绿色像素。`第二遍正常绘制`：当玩家没有被物体挡住，则绘制正常颜色。
 > * Z测试和Z比较：`物体到镜头的距离`就是Z轴（深度值），镜头处为0，镜头最大截面为1，越小越靠近镜头。
 > * Z开启和Z关闭：`ON`保留镜头的Z值，屏幕上每个像素点都存储有当前最靠近镜头的物体的Z值，`OFF`避免屏幕存储错误的Z值，因为玩家被物体挡住。如果`打开Z测试`（深度缓存），我们就可以根据此深度值决定同样映射到此处的像素值是否可以写入到帧缓存中并绘制到屏幕上（最后产生的效果就是离相机越近的像素只会被写入到帧缓存，并绘制出来）。如果`关闭Z测试`（深度缓存），那么像素是否写入帧缓存就不依赖距离相机的远近（依赖于程序代码实现）。
@@ -22,13 +22,13 @@
 `顶点着色器`（Vertex）：它执行在场景中的每个点，输出坐标投影，颜色，纹理和其他数据传递到片段着色器。  
 `片段着色器`（Fragment）：它执行在每个像素，输出信息为像素的颜色。  
 
-### 场景设置
+### 前期准备
 > * 场景包含2个Plane，下面的Plane作为地板，上面的Plane取消了`Mesh Collider`，可以挡着玩家，方便测试下透视效果，另外还有4个Cube作为围墙。
 > * 玩家由Capsule和Cube组成，Shader文件夹下有一个`Material`用来控制玩家的材质。
 > * 控制玩家移动的脚本，放在Scripts下的`PlayerMove`。
 > * 把脚本挂到玩家身上，记得还要给玩家添加一个`Rigidbody`组件，并勾上`Constraints`->`Freeze Rotation`->`X Z`，这是控制玩家只能朝着Y轴方向。
 
-### 透视效果编写与测试
+### 测试
 > * Shader文件夹下有一个`PlayerShader`，控制玩家透视效果。
 > * Unity引擎会自动检测Shader文件，然后自动添加到Shader下拉列表。
 > * 选择玩家`Shader`->`Custom`->`PlayerShader`。
@@ -43,7 +43,12 @@
 > * 运行Main场景，可以看到镜头抖动效果。
 
 # NO.5 玩家范围检测
-### 基础知识
+### 原理
+> * 玩家范围检测就是判断怪物是否在玩家一定`距离`和`角度`（呈现扇形区域）内，因此需要分别计算距离和角度。
+> * 玩家和怪物的`距离`可以通过`Vector3.Distance`计算。
+> * 玩家和怪物的`角度`可以通过`Mathf.Acos`计算，然后乘以`Mathf.Rad2Deg`转化为度数。
+
+### 脚本解释
 > * `Vector3.Distance(Vector3 a, Vector3 b)` 返回a和b之间的距离。
 > * `Vector3.normalized` 向量标准化。（只读）
 > * `Vector3.Dot(Vector3 lhs, Vector3 rhs)` 返回两个向量的点乘积。
@@ -51,23 +56,18 @@
 > * `Mathf.Acos(float f)` 以弧度为单位计算并返回参数 f 中指定的数字的反余弦值。
 > * `Debug.DrawLine(Vector3 start, Vector3 end, Color color)` 从start起点到end末点，绘制一条color颜色的线。
 
-### 基本思路
-> * 玩家范围检测就是判断怪物是否在玩家一定`距离`和`角度`（呈现扇形区域）内，因此需要分别计算距离和角度。
-> * 玩家和怪物的`距离`可以通过`Vector3.Distance`计算。
-> * 玩家和怪物的`角度`可以通过`Mathf.Acos`计算，然后乘以`Mathf.Rad2Deg`转化为度数。
-
-### 检测效果编写与测试
+### 测试
 > * 场景有玩家和怪物，玩家设置同NO.2。
 > * 范围检测脚本名为`Detecting`，挂到玩家身上。
 > * 运行游戏，Game视图下点击Gizmos显示画图效果，可以看到如果范围内，则输出在，如果范围外，则输出不在。
 
 # NO.6 镜头放大旋转
-### 基础知识
+### 原理
 > * `Vector.magnitude` 返回向量的长度，向量的长度是(x\*x+y\*y+z\*z)的平方根。
 > * `Mathf.Clamp(float value, float min, float max)` 限制value的值在min和max之间，如果value小于min，返回min。如果value大于max，返回max。否则返回value。
 > * `Transform.RotateAround(Vector3 point, Vector3 axis, float angle)` 一个物体围绕 point位置 的 axis轴 旋转 angle角度
 
-### 基本思路
+### 脚本解释
 > * transform.position = offsetPosition + player.position;  // 镜头跟随玩家
 > * ScrollView();  // 控制镜头的拉近拉远  
 `Input.GetAxis("Mouse ScrollWheel")` 鼠标向后滑动返回负数（拉近视野），向前滑动正数（拉远视野）
@@ -76,13 +76,18 @@
 `Input.GetAxis("Mouse X")` 得到鼠标水平方向的滑动  
 `Input.GetAxis("Mouse Y")` 得到鼠标垂直方向的滑动  
 
-### 镜头效果编写与测试
+### 测试
 > * 场景有两个玩家（默认Player2可用），Player1设置同NO.2是用键盘WSAD控制玩家移动，Player2我们新增了一个脚本`PlayerMove2`来用鼠标左键控制玩家移动。
 > * 控制镜头的脚本名为`FollowPlayer`，挂到镜头身上。
 > * 运行游戏，鼠标`左键`可以控制玩家移动，鼠标`滑轮`可以控制镜头拉近拉远，鼠标`右键`可以控制镜头上下左右。
 
 # NO.7 跑马灯
-### 场景设置
+### 原理
+> * 跑马灯有区域限制，超出这个区域就不显示，这里我们用`Mask遮罩`实现。
+> * 以水平跑马灯为例：跑马灯的可视范围是背景宽度，文字从右边开始到左边结束，总共移动的距离是`背景宽度 + 文字宽度`。
+> * 跑马灯的动画实现使用了`DOTween插件`。
+
+### 前期准备
 > * 新建一个Image作为背景。调整适当大小。
 > * 背景下再新建一个Image。添加Mask组件，用于遮住背景之外的文字，Rect Transfrom设置为Stretch，四维全部设置为0，铺满背景。
 如果是水平滚动的将Rect Transform的Pivot设置为`1 0.5`，令Mask锚点位于`右边`。
@@ -91,12 +96,7 @@
 如果是水平滚动的将`Horizontal Fit`设置为Preferred Size，将Rect Transform的Pivot设置为`0 0.5`，令Text锚点位于Mask处，方便实现从右往左动画。
 如果是垂直滚动的将`Vertical Fit`设置为Preferred Size，将Rect Transform的Pivot设置为`0.5 1`，令Text锚点位于Mask处，方便实现从下往上动画。
 
-### 跑马灯原理
-> * 跑马灯有区域限制，超出这个区域就不显示，这里我们用`Mask遮罩`实现。
-> * 以水平跑马灯为例：跑马灯的可视范围是背景宽度，文字从右边开始到左边结束，总共移动的距离是`背景宽度 + 文字宽度`。
-> * 跑马灯的动画实现使用了`DOTween插件`。
-
-### 跑马灯脚本解释
+### 脚本解释
 ```
 float width = HText.preferredWidth;  // 获取文字的长度
 HText.rectTransform.anchoredPosition = new Vector2(0, 0.5f);  // 让文字从在最右边开始移动
@@ -108,12 +108,12 @@ tweener.OnStart(delegate { Debug.Log("水平走马灯事件开始"); });  // 设
 tweener.OnComplete(delegate { Debug.Log("水平走马灯事件结束"); });  // 设置动画结束事件
 ```
 
-# NO.8 淡入淡出
-### 淡入淡出原理
+# NO.8 淡入淡出效果
+### 原理
 > * 通过改变组件color的alpha值，实现隐藏。
 > * 淡入淡出的动画实现使用了`DOTween插件`。
 
-### 淡入淡出脚本解释
+### 脚本解释
 ```
 // delay时间内隐藏
 Tweener tweener = GetComponent<Text>().DOFade(0, delay);
@@ -123,7 +123,7 @@ tweener.SetEase(Ease.Linear);
 tweener.SetLoops(-1, LoopType.Yoyo);
 ```
 
-# NO.9 摇杆实现
+# NO.9 摇杆功能
 > * `定义委托`  
 public delegate void JoyStickTouchBegin(Vector2 vec);  // 定义触摸开始事件委托  
 public delegate void JoyStickTouchMove(Vector2 vec);  // 定义触摸过程事件委托  
@@ -158,7 +158,7 @@ private Vector2 GetJoyStickAxis(PointerEventData eventData)
 }
 ```
 
-# NO.10 小地图实现
+# NO.10 小地图功能
 > * `UI准备`：Mask圆形遮罩，Minimap小地图边框。
 > * 添加一个新的相机，并命名为`Mini Camera`。然后将该相机设为 Player 的子对象，position设为(0, 10,0)，rotation设为(90, 0, 0)。
 > * 渲染到UI层需要用到Render Texture来实现。依次点击菜单项Assets -> Create -> Render Texture新建Render Texture，并命名为`Minimap Render`。选中Mini Camera后将Target Texture设为Minimap Render。
@@ -377,7 +377,7 @@ void SetPosition(int index)
 ```
 
 # NO.17 分页效果
-## 前期准备
+### 前期准备
 > * 制作Grid  
 1.新建Image，改名`Grid`作为头像。  
 2.新建Image作为`Grid`子物体，改名为`Item`作为物品名字背景。  
@@ -390,7 +390,7 @@ Grid
 1.新建Panel，将Grid作为Panel子物体，再将Grid复制12份。  
 2.在Panel下添加`Grid Layout Group`组件，调整Padding、Cell Size、Spacing到合适位置，可以看到子物体全部自动排版。  
 
-## 分页实现
+### 脚本解释
 > * 重要属性
 ```
 private int itemsCount = 0;  // 物品数量
@@ -450,12 +450,12 @@ if (index == pagesCount)
 ```
 
 # NO.18 AssetBundle使用
-## 前期准备
+### 前期准备
 > * 导入角色文件夹，将角色制作成Prefab。
 > * 点击Prefab，可以看到Inspector视图下方的AssetBundle。
 > * 在Prefab的AssetBundle下添加一个名叫`swordman`的标识。
 
-## 导出AssetBundle
+### 导出AssetBundle
 > * 在同目录下新建目录`Editor`，进入目录新建脚本`BundleEditor`：
 ```
 using UnityEditor;
@@ -473,7 +473,7 @@ public static class BundleEditor
 > * 这里需要保证目录`AssetBundles`存在，否则导致报错。
 > * 在菜单栏选择`Assets->Build AssetBundles`，AssetBundle将自动生成到对应目录。
 
-## 测试AssetBundle
+### 测试AssetBundle
 > * 从本地加载的文件目录：`"file://F:/HelloWorld/Unity/Unity Tricks/Assets/NO18/AssetBundles/"`。注意这里的地址就是我们生成的对应目录。
 > * 从网络加载的文件目录：`"http://www.littleredhat1997.com/games/AssetBundles/"`。注意需要将生成的AssetBundle放到服务器对应目录。
 > * 需要加载的资源名字：`"swordman"`
@@ -612,7 +612,12 @@ GetComponent<Rigidbody>().AddForce(Vector3.right * force, ForceMode.Impulse);
 ```
 
 # NO.24 插值移动效果
-## 前期准备
+### 原理
+> * 线性插值 `Vector3.Lerp(Vector3 from, Vector3 to, float smoothing)` 。
+> * 公式 `t = from + (to - from) * smoothing`。
+> * from为初始位置，to为结束位置，smoothing为平滑速度，返回t为线性插值计算出来的向量，范围在 [0...1]之间。
+
+### 前期准备
 > * 创建2D精灵Sprite，命名为`Player`，作为我们的主角。
 > * 通过前面的教程切图，制作人物休息和运动动画，按住CTRL选中几张帧动画图片拖到Inspector上的主角，可以快速生成动画，命名为`PlayerIdle`和`PlayerRun`，同时生成主角同名动画状态机Player。
 > * 双击Player动画状态机可以直接打开Animator视图，将PlayerIdle和PlayerRun拖到视图，分别右键`Make Transition`。
@@ -620,12 +625,7 @@ GetComponent<Rigidbody>().AddForce(Vector3.right * force, ForceMode.Impulse);
 > * 通过上面的步骤，我们设置PlayerIdle到PlayerRun的转换条件为Run `True`，PlayerRun到PlayerIdle的转化条件为Run `False`。
 > * 这里有个细节需要注意，将两个转换上的`Has Exit Time`选项取消勾选，否则动画切换的时候会不及时，因为转换到下一个动画之前必须等待当前动画播放完毕。
 
-## 基础知识
-> * 线性插值 `Vector3.Lerp(Vector3 from, Vector3 to, float smoothing)` 。
-> * 公式 `t = from + (to - from) * smoothing`。
-> * from为初始位置，to为结束位置，smoothing为平滑速度，返回t为线性插值计算出来的向量，范围在 [0...1]之间。
-
-## 脚本解释
+### 脚本解释
 > * 控制人物朝向
 ```
 // 向左移动
@@ -700,6 +700,39 @@ void WebCamTexture.Apply()
 byte[] WebCamTexture.EncodeToPNG()
 // 暂停
 void WebCamTexture.Pause()
+```
+
+# NO.28 画图功能
+### 前期准备
+> * 创建一个空物体，添加LineRender组件，制作预制体
+
+### 脚本解释
+```
+// 鼠标左键按下瞬间
+if (Input.GetMouseButtonDown(0))
+{
+    go = Instantiate(linePrefab, linePrefab.transform.position, transform.rotation);
+    line = go.GetComponent<LineRenderer>();
+    // 设置材质
+    line.material = new Material(Shader.Find("Particles/Additive"));
+    // 设置颜色
+    line.startColor = Color.red;
+    line.endColor = Color.red;
+    // 设置宽度  
+    line.startWidth = 0.1f;
+    line.endWidth = 0.1f;
+    i = 0;
+}
+// 鼠标左键按下期间
+if (Input.GetMouseButton(0))
+{
+    i++;
+    // 设置顶点数  
+    line.numPositions = i;
+    // 设置顶点位置 
+    line.SetPosition(i - 1, Camera.main.ScreenToWorldPoint(
+            new Vector3(Input.mousePosition.x, Input.mousePosition.y, 15)));
+}
 ```
 
 ---
