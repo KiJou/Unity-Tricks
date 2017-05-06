@@ -121,6 +121,7 @@
     <Compile Include="Assets\NO24\LerpRun.cs" />
     <Compile Include="Assets\NO26\CaptureScreen.cs" />
     <Compile Include="Assets\NO27\TakePhoto.cs" />
+    <Compile Include="Assets\NO28\Draw.cs" />
     <Compile Include="Assets\NO3\Typing.cs" />
     <Compile Include="Assets\NO4\Shaking.cs" />
     <Compile Include="Assets\NO5\Detecting.cs" />

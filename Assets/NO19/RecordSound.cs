@@ -56,9 +56,9 @@ public class RecordSound : MonoBehaviour
     // 保存录音
     void StoreRecord()
     {
-        string path = "F:/HelloWorld/Unity/Unity Tricks/Assets/NO19/Sound/";
-        string name = "test.wav";
-        using (FileStream fileStream = CreateEmpty(path + name))
+        string path = Application.dataPath + "/NO19/Sound/";
+        string guid = Guid.NewGuid().ToString() + ".wav";
+        using (FileStream fileStream = CreateEmpty(path + guid))
         {
             ConvertAndWrite(fileStream, clip);
             WriteHeader(fileStream, clip);

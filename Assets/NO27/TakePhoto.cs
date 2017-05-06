@@ -44,8 +44,8 @@ public class TakePhoto : MonoBehaviour
 
     IEnumerator getPhoto()
     {
-        string path = "F:/HelloWorld/Unity/Unity Tricks/Assets/NO27/Img/";
-        string name = "test.png";
+        string path = Application.dataPath + "/NO27/Screen/";
+        string guid = System.Guid.NewGuid().ToString() + ".png";
 
         yield return new WaitForEndOfFrame();
         // width height format mipmap
@@ -57,7 +57,7 @@ public class TakePhoto : MonoBehaviour
         t.Apply();
         // 纹理编码为PNG格式
         byte[] bs = t.EncodeToPNG();
-        File.WriteAllBytes(path + name, bs);
+        File.WriteAllBytes(path + guid, bs);
         tex.Pause();
     }
 }

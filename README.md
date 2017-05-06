@@ -704,7 +704,7 @@ void WebCamTexture.Pause()
 
 # NO.28 画图功能
 ### 前期准备
-> * 创建一个空物体，添加LineRender组件，制作预制体
+> * 创建一个空物体，添加LineRender组件，制作预制体。
 
 ### 脚本解释
 ```

@@ -6,8 +6,8 @@ public class FollowPlayer : MonoBehaviour
     public float maxDistance = 10.0f;  // 拉远的最大值
     public float minAngle = 10.0f;  // 向下的最小值
     public float maxAngle = 80.0f;  // 向上的最大值
-    public float scrollSpeed = 3;  // 控制拉近拉远的速度
-    public float rotareSpeed = 2;  // 控制左右上下的速度
+    public float scrollSpeed = 3;  // 控制放缩的速度
+    public float rotateSpeed = 2;  // 控制旋转的速度
 
     private Transform player;
     private Vector3 offsetPosition;  // 初始镜头和玩家的位置偏移量
@@ -24,8 +24,8 @@ public class FollowPlayer : MonoBehaviour
     {
         transform.position = offsetPosition + player.position;  // 镜头跟随玩家
 
-        ScrollView();  // 控制镜头的拉近拉远
-        RotateView();  // 控制镜头的左右上下
+        ScrollView();
+        RotateView();
     }
 
     // 控制镜头的拉近拉远
@@ -43,9 +43,8 @@ public class FollowPlayer : MonoBehaviour
         distance += Input.GetAxis("Mouse ScrollWheel") * -scrollSpeed;
         distance = Mathf.Clamp(distance, minDistance, maxDistance);
 
-        offsetPosition = offsetPosition.normalized * distance;  // 改变位置便移
+        offsetPosition = offsetPosition.normalized * distance;  // 改变位置偏移
     }
-
 
     // 控制镜头的左右上下
     void RotateView()
@@ -63,13 +62,13 @@ public class FollowPlayer : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             // 左右
-            transform.RotateAround(player.position, player.up, rotareSpeed * Input.GetAxis("Mouse X"));
+            transform.RotateAround(player.position, player.up, rotateSpeed * Input.GetAxis("Mouse X"));
 
             Vector3 originalPos = transform.position;  // 记录镜头位置
             Quaternion originalRotation = transform.rotation;  // 记录镜头旋转
 
             // 上下 (会影响到的属性一个是Position，一个是Rotation)
-            transform.RotateAround(player.position, transform.right, -rotareSpeed * Input.GetAxis("Mouse Y"));
+            transform.RotateAround(player.position, transform.right, -rotateSpeed * Input.GetAxis("Mouse Y"));
             float x = transform.eulerAngles.x;
             if (x < minAngle || x > maxAngle)  // 限制上下范围
             {

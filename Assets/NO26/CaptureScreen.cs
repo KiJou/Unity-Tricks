@@ -14,11 +14,11 @@ public class CaptureScreen : MonoBehaviour
 
     private void Cature()
     {
-        string path = "F:/HelloWorld/Unity/Unity Tricks/Assets/NO26/Img/";
-        string name = "test.png";
+        string path = Application.dataPath + "/NO26/Screen/";
+        string guid = System.Guid.NewGuid().ToString() + ".png";
 
         // fileName截屏文件名称
         // superSize放大系数 默认为0即不放大
-        Application.CaptureScreenshot(path + name, 0);
+        Application.CaptureScreenshot(path + guid, 0);
     }
 }
