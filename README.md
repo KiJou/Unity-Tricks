@@ -1,9 +1,5 @@
 # Unity Tricks小把戏
 
-标签： unity
-
----
-
 ## NO.1 精灵切图
 
 ## NO.2 资源加载
