@@ -1,54 +1,70 @@
 # Unity Tricks小把戏
 
+标签： unity
+
+---
+
 ## NO.1 精灵切图
 
 ## NO.2 资源加载
 
-## NO.3 着色透视
+## NO.3 透视发光
 
-## NO.4 录音功能
+## NO.4 边沿发光
 
-## NO.5 截屏功能
+## NO.5 录音功能
 
-## NO.6 拍照功能
+## NO.6 截屏功能
 
-## NO.7 淡入淡出
+## NO.7 拍照功能
 
-## NO.8 文字打字
+## NO.8 文本效果
 
-## NO.9 镜头震动
+## NO.9 线条画图
 
 ## NO.10 时间倒流
 
 ## NO.11 物体爆炸
 
-## No.12 射线拾取
+## NO.12 射线拾取
 
-## NO.13 范围检测
+## NO.13 昼夜交替
 
-## NO.14 昼夜交替
+## NO.14 场景加载
 
-## NO.15 场景加载
+## NO.15 范围检测
 
 ## NO.16 虚拟摇杆
 
-## NO.17 回合攻击
+## NO.17 技能冷却
 
-## NO.18 幸运转盘
+## NO.18 回合攻击
 
-## NO.19 背包分页
+## NO.19 跑马灯
+一、水平跑马灯：  
+1、创建Image作为[Mask]，Rect Transfrom设置为Stretch，Pivot修改为(1, 0.5)，令Mask锚点位于右边。  
+2、添加Mask组件，用于遮住背景之外的文字。  
+3、Mask下创建Text作为[Content]，Pivot修改为(0, 0.5)。  
+4、添加Content Size Fitter组件，将Horizontal Fit设置为Preferred Size，令Text锚点位于Mask处，方便实现从右往左动画。
 
-## NO.20 线条画图
+二、垂直跑马灯：  
+1、创建Image作为[Mask]，Rect Transfrom设置为Stretch，Pivot修改为(0.5, 0)，令Mask锚点位于下边。  
+2、添加Mask组件，用于遮住背景之外的文字。  
+3、Mask下创建Text作为[Content]，Pivot修改为(0.5, 1)。  
+4、添加Content Size Fitter组件，将Vertical Fit设置为Preferred Size，令Text锚点位于Mask处，方便实现下往上动画。
 
-## NO.21 弹力小球
+## NO.20 弹力实验
+1、创建一个Physic Material，将(Dynamic Friction, Static Friction, Bounciness)分别设置成(0, 0, 1)。  
+2、创建一个Sphere，将Mesh Renderer的Material设置为上述物理材质，同时添加Rigidbody组件。  
+3、创建一个Cube作为地面，调整至合适大小。如果使用Plane，Sphere可能会穿过地面。
 
-## NO.22 单摆
+## NO.21 单摆实验
 1、创建一个Sphere球体作为重物，Scale修改为(0.2, 0.2, 0.2)，添加Rigidbody组件。  
 2、创建一个Capsule胶囊体作为绳子，Position修改为(0, 1, 0)，Scale修改为(0.005, 1, 0.005)，添加Rigidbody组件，勾选Freeze PositionXYZ和Freeze RotationXY。  
 3、最关键的一步到了，绳子添加Fixed Joint固定关节组件，并将Sphere拖到Connected Body上。固定关节基于另一个物体来限制一个物体的运动。  
 4、还需要控制绳子的质心以及重物的初始受力，分别在Rope和Sphere两个脚本实现。
 
-## NO.23 小地图
+## NO.22 小地图
 1、创建Camera，命名为[Mini Camera]，Position修改为(0, 10,0)，Rotation修改为(90, 0, 0)。  
 2、创建Render Texture，命名为[Minimap Render]，选中[Mini Camera]后将Target Texture设置为[Minimap Render]。  
 3、创建Raw Image，命名为[Map]，将Texture设置为[Minimap Render]。  
@@ -61,18 +77,11 @@
 -------- [Map]  
 ---- [Outline]
 
-## NO.24 跑马灯
-一、水平跑马灯：  
-1、创建Image作为[Mask]，Rect Transfrom设置为Stretch，Pivot修改为(1, 0.5)，令Mask锚点位于右边。  
-2、添加Mask组件，用于遮住背景之外的文字。  
-3、Mask下创建Text作为[Content]，Pivot修改为(0, 0.5)。  
-4、添加Content Size Fitter组件，将Horizontal Fit设置为Preferred Size，令Text锚点位于Mask处，方便实现从右往左动画。
+## NO.23 背包分页
+略...
 
-二、垂直跑马灯：  
-1、创建Image作为[Mask]，Rect Transfrom设置为Stretch，Pivot修改为(0.5, 0)，令Mask锚点位于下边。  
-2、添加Mask组件，用于遮住背景之外的文字。  
-3、Mask下创建Text作为[Content]，Pivot修改为(0.5, 1)。  
-4、添加Content Size Fitter组件，将Vertical Fit设置为Preferred Size，令Text锚点位于Mask处，方便实现下往上动画。
+## NO.24 幸运转盘
+略...
 
 ## NO.25 聊天室
 一、重点难点：  

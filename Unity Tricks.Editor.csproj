@@ -145,8 +145,8 @@
     <Reference Include="DOTweenProEditor">
       <HintPath>Assets\Plugins\Demigiant\DOTweenPro\Editor\DOTweenProEditor.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-UnityScript">
-      <HintPath>Library\ScriptAssemblies\Assembly-UnityScript.dll</HintPath>
+    <Reference Include="Assembly-UnityScript-firstpass">
+      <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -168,7 +168,8 @@
     <Compile Include="Assets\NO.2\Editor\BundleEditor.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\NO.3\PlayerShader.shader" />
+    <None Include="Assets\NO.3\Occlusion.shader" />
+    <None Include="Assets\NO.4\Rim.shader" />
     <None Include="Assets\Plugins\Demigiant\DOTween\DOTween.XML" />
     <None Include="Assets\Plugins\Demigiant\DOTween\DOTween43.xml" />
     <None Include="Assets\Plugins\Demigiant\DOTween\DOTween46.xml" />

@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity Tricks.Plugins", "Unity Tricks.Plugins.csproj", "{CA67F7F7-9154-8C5C-4013-2BA808D32ADA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity Tricks", "Unity Tricks.csproj", "{E4DDE6B9-03E4-99FD-A5DD-675CB2E89313}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity Tricks.Editor.Plugins", "Unity Tricks.Editor.Plugins.csproj", "{E7F1AE4D-9427-8841-D43E-2D6FFDCC1B95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity Tricks.Editor", "Unity Tricks.Editor.csproj", "{225071A8-F5E0-F636-AED8-3C5AC30C1B7A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CA67F7F7-9154-8C5C-4013-2BA808D32ADA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA67F7F7-9154-8C5C-4013-2BA808D32ADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA67F7F7-9154-8C5C-4013-2BA808D32ADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA67F7F7-9154-8C5C-4013-2BA808D32ADA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4DDE6B9-03E4-99FD-A5DD-675CB2E89313}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4DDE6B9-03E4-99FD-A5DD-675CB2E89313}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4DDE6B9-03E4-99FD-A5DD-675CB2E89313}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4DDE6B9-03E4-99FD-A5DD-675CB2E89313}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7F1AE4D-9427-8841-D43E-2D6FFDCC1B95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7F1AE4D-9427-8841-D43E-2D6FFDCC1B95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7F1AE4D-9427-8841-D43E-2D6FFDCC1B95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7F1AE4D-9427-8841-D43E-2D6FFDCC1B95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{225071A8-F5E0-F636-AED8-3C5AC30C1B7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{225071A8-F5E0-F636-AED8-3C5AC30C1B7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{225071A8-F5E0-F636-AED8-3C5AC30C1B7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{225071A8-F5E0-F636-AED8-3C5AC30C1B7A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

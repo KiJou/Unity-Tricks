@@ -94,6 +94,9 @@
     <Reference Include="DOTweenPro">
       <HintPath>Assets\Plugins\Demigiant\DOTweenPro\DOTweenPro.dll</HintPath>
     </Reference>
+    <Reference Include="Assembly-UnityScript-firstpass">
+      <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Unity Tricks.Plugins.csproj">
@@ -108,34 +111,35 @@
     <Compile Include="Assets\NO.10\TimeTravel.cs" />
     <Compile Include="Assets\NO.11\Explosion.cs" />
     <Compile Include="Assets\NO.12\PickUp.cs" />
-    <Compile Include="Assets\NO.13\Detecting.cs" />
-    <Compile Include="Assets\NO.14\DayNight.cs" />
-    <Compile Include="Assets\NO.15\LoadScene.cs" />
-    <Compile Include="Assets\NO.15\SceneMgr.cs" />
+    <Compile Include="Assets\NO.13\DayNight.cs" />
+    <Compile Include="Assets\NO.14\LoadScene.cs" />
+    <Compile Include="Assets\NO.14\SceneMgr.cs" />
+    <Compile Include="Assets\NO.15\Detecting.cs" />
     <Compile Include="Assets\NO.16\JoyStick.cs" />
     <Compile Include="Assets\NO.16\JSMove.cs" />
-    <Compile Include="Assets\NO.17\GameController.cs" />
-    <Compile Include="Assets\NO.17\PlayerAttack.cs" />
-    <Compile Include="Assets\NO.18\LuckyRound.cs" />
-    <Compile Include="Assets\NO.19\Page.cs" />
+    <Compile Include="Assets\NO.17\CoolDown.cs" />
+    <Compile Include="Assets\NO.18\GameController.cs" />
+    <Compile Include="Assets\NO.18\PlayerAttack.cs" />
+    <Compile Include="Assets\NO.19\HRunning.cs" />
+    <Compile Include="Assets\NO.19\VRunning.cs" />
     <Compile Include="Assets\NO.2\LoadAssetBundle.cs" />
-    <Compile Include="Assets\NO.20\Draw.cs" />
-    <Compile Include="Assets\NO.22\Rope.cs" />
-    <Compile Include="Assets\NO.22\Sphere.cs" />
-    <Compile Include="Assets\NO.24\HRunning.cs" />
-    <Compile Include="Assets\NO.24\VRunning.cs" />
+    <Compile Include="Assets\NO.21\Rope.cs" />
+    <Compile Include="Assets\NO.21\Sphere.cs" />
+    <Compile Include="Assets\NO.23\Page.cs" />
+    <Compile Include="Assets\NO.24\Lucky.cs" />
     <Compile Include="Assets\NO.25\ChatRoom.cs" />
     <Compile Include="Assets\NO.25\ChatUI.cs" />
     <Compile Include="Assets\NO.26\Shell.cs" />
-    <Compile Include="Assets\NO.4\RecordSound.cs" />
-    <Compile Include="Assets\NO.5\CaptureScreen.cs" />
-    <Compile Include="Assets\NO.6\TakePhoto.cs" />
-    <Compile Include="Assets\NO.7\FadeText.cs" />
+    <Compile Include="Assets\NO.5\RecordSound.cs" />
+    <Compile Include="Assets\NO.6\CaptureScreen.cs" />
+    <Compile Include="Assets\NO.7\TakePhoto.cs" />
+    <Compile Include="Assets\NO.8\FadeText.cs" />
     <Compile Include="Assets\NO.8\TypeText.cs" />
-    <Compile Include="Assets\NO.9\ShakeCamera.cs" />
+    <Compile Include="Assets\NO.9\Draw.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\NO.3\PlayerShader.shader" />
+    <None Include="Assets\NO.3\Occlusion.shader" />
+    <None Include="Assets\NO.4\Rim.shader" />
     <None Include="Assets\Plugins\Demigiant\DOTween\DOTween.XML" />
     <None Include="Assets\Plugins\Demigiant\DOTween\DOTween43.xml" />
     <None Include="Assets\Plugins\Demigiant\DOTween\DOTween46.xml" />
