@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class SceneMgr : UnitySingleton<SceneMgr>
 {
+    [Header("加载预设")]
+    public GameObject loadScenePrefab;
+
     // 画布的transform
     private Transform _canvasTransform;
     private Transform CanvasTransform
@@ -17,7 +20,6 @@ public class SceneMgr : UnitySingleton<SceneMgr>
         }
     }
 
-    public GameObject loadScenePrefab;
     private Slider loadingBar;
     private Text loadingProgress;
 
