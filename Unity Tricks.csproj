@@ -67,29 +67,23 @@
     <Reference Include="nunit.framework">
       <HintPath>Library\UnityAssemblies\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Timeline">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Timeline.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.Analytics">
       <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.HoloLens">
-      <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
+    <Reference Include="DemiLib">
+      <HintPath>Assets\DOTween\Demigiant\DemiLib\Core\DemiLib.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>Assets\DOTween\Demigiant\DOTween\DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween43">
+      <HintPath>Assets\DOTween\Demigiant\DOTween\DOTween43.dll</HintPath>
     </Reference>
     <Reference Include="DOTween46">
       <HintPath>Assets\DOTween\Demigiant\DOTween\DOTween46.dll</HintPath>
     </Reference>
     <Reference Include="DOTween50">
       <HintPath>Assets\DOTween\Demigiant\DOTween\DOTween50.dll</HintPath>
-    </Reference>
-    <Reference Include="DemiLib">
-      <HintPath>Assets\DOTween\Demigiant\DemiLib\Core\DemiLib.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTween43">
-      <HintPath>Assets\DOTween\Demigiant\DOTween\DOTween43.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTween">
-      <HintPath>Assets\DOTween\Demigiant\DOTween\DOTween.dll</HintPath>
     </Reference>
     <Reference Include="DOTweenPro">
       <HintPath>Assets\DOTween\Demigiant\DOTweenPro\DOTweenPro.dll</HintPath>
@@ -122,6 +116,7 @@
     <Compile Include="Assets\NO.25\ChatRoom.cs" />
     <Compile Include="Assets\NO.25\ChatUI.cs" />
     <Compile Include="Assets\NO.26\Shell.cs" />
+    <Compile Include="Assets\NO.3\CameraBlur.cs" />
     <Compile Include="Assets\NO.5\RecordSound.cs" />
     <Compile Include="Assets\NO.6\CaptureScreen.cs" />
     <Compile Include="Assets\NO.7\TakePhoto.cs" />
@@ -142,7 +137,8 @@
     <None Include="Assets\DOTween\Demigiant\DemiLib\Core\DemiLib.xml" />
     <None Include="Assets\DOTween\Demigiant\DemiLib\Core\Editor\DemiEditor.xml" />
     <None Include="Assets\DOTween\Demigiant\readme_DOTweenPro.txt" />
-    <None Include="Assets\NO.3\Occlusion.shader" />
+    <None Include="Assets\Main\Material\Occlusion.shader" />
+    <None Include="Assets\NO.3\BlurEffect.shader" />
     <None Include="Assets\NO.4\Rim.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

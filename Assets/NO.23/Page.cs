@@ -17,8 +17,8 @@ class GridItem
 
 public class Page : MonoBehaviour
 {
-    [Header("背包面板")]
-    public Text panelText;
+    [Header("进度文字")]
+    public Text indexText;
     [Header("上一页")]
     public Button preBtn;
     [Header("下一页")]
@@ -76,13 +76,13 @@ public class Page : MonoBehaviour
             itemList.Add(items[Random.Range(0, items.Length)]);
             Debug.Log(itemList[i].itemName);
         }
-        // 计算元素总个数
+        // 计算物品数量
         itemsCount = itemList.Count;
-        // 计算总页数
+        // 计算页面数量
         pageCount = (itemsCount % limit) == 0 ? itemsCount / limit : (itemsCount / limit) + 1;
         BindPage(pageIndex);
-        // 更新界面页数
-        panelText.text = string.Format("{0} / {1}", pageIndex.ToString(), pageCount.ToString());
+        // 更新界面进度
+        indexText.text = string.Format("{0} / {1}", pageIndex.ToString(), pageCount.ToString());
     }
 
     // 上一页
@@ -93,14 +93,14 @@ public class Page : MonoBehaviour
         // 第一页时禁止向前翻页
         if (pageIndex <= 1)
             return;
-        pageIndex -= 1;
+        pageIndex--;
         if (pageIndex < 1)
             pageIndex = 1;
 
         BindPage(pageIndex);
 
-        // 更新界面页数
-        panelText.text = string.Format("{0} / {1}", pageIndex.ToString(), pageCount.ToString());
+        // 更新界面进度
+        indexText.text = string.Format("{0} / {1}", pageIndex.ToString(), pageCount.ToString());
     }
 
     // 下一页
@@ -111,15 +111,14 @@ public class Page : MonoBehaviour
         // 最后一页禁止向后翻页
         if (pageIndex >= pageCount)
             return;
-
-        pageIndex += 1;
+        pageIndex++;
         if (pageIndex >= pageCount)
             pageIndex = pageCount;
 
         BindPage(pageIndex);
 
-        // 更新界面页数
-        panelText.text = string.Format("{0} / {1}", pageIndex.ToString(), pageCount.ToString());
+        // 更新界面进度
+        indexText.text = string.Format("{0} / {1}", pageIndex.ToString(), pageCount.ToString());
     }
 
     // 绑定指定索引处的页面元素
@@ -137,11 +136,12 @@ public class Page : MonoBehaviour
         if (index == pageCount)
         {
             // 最后一页剩下的元素数目为 itemsCount - COUNT * (index - 1)
-            // 其中 COUNT * (index-1) 为前面元素数目
+            // 其中 COUNT * (index - 1) 为前面元素数目
             int cnt = itemsCount - limit * (index - 1);
             for (int i = 0; i < cnt; ++i)
             {
-                BindGridItem(transform.GetChild(i), itemList[limit * (index - 1) + i]);
+                GridItem item = itemList[limit * (index - 1) + i];
+                BindGridItem(transform.GetChild(i), item);
                 transform.GetChild(i).gameObject.SetActive(true);
             }
             for (int i = cnt; i < limit; ++i)
@@ -155,13 +155,13 @@ public class Page : MonoBehaviour
         {
             for (int i = 0; i < limit; ++i)
             {
-                BindGridItem(transform.GetChild(i), itemList[limit * (index - 1) + i]);
+                GridItem item = itemList[limit * (index - 1) + i];
+                BindGridItem(transform.GetChild(i), item);
                 transform.GetChild(i).gameObject.SetActive(true);
             }
         }
     }
 
-    // 将一个GridItem实例绑定到指定的Transform上
     void BindGridItem(Transform trans, GridItem gridItem)
     {
         trans.GetComponent<Image>().sprite = Resources.Load(gridItem.iconPath, new Sprite().GetType()) as Sprite;
