@@ -1,4 +1,0 @@
-sceneSetups:
-- path: Assets/NO.3/Main.unity
-  isLoaded: 1
-  isActive: 1
